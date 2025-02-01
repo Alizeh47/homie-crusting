@@ -1,7 +1,9 @@
-import { useState, useEffect } from 'react';
+'use client';
+
+import { useState, useEffect, useCallback } from 'react';
 import { useAuth } from '@/context/AuthContext';
-import { supabase } from '@/lib/supabase/client';
-import type { Profile, ProfileFormData } from '@/types/profile';
+import { createClient } from '@/lib/supabase/client';
+import type { ProfileFormData } from '@/types/profile';
 
 export function ProfileForm() {
   const { user } = useAuth();
@@ -14,19 +16,18 @@ export function ProfileForm() {
     avatar_url: '',
   });
 
-  useEffect(() => {
-    if (user) {
-      fetchProfile();
-    }
-  }, [user]);
-
-  const fetchProfile = async () => {
+  const fetchProfile = useCallback(async () => {
+    if (!user) return;
+    
     try {
       setLoading(true);
+      const supabase = await createClient();
+      if (!supabase) throw new Error('Could not initialize Supabase client');
+
       const { data, error } = await supabase
         .from('profiles')
         .select('*')
-        .eq('id', user?.id)
+        .eq('id', user.id)
         .single();
 
       if (error) throw error;
@@ -44,7 +45,13 @@ export function ProfileForm() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [user]);
+
+  useEffect(() => {
+    if (user) {
+      fetchProfile();
+    }
+  }, [user, fetchProfile]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -52,6 +59,8 @@ export function ProfileForm() {
       setLoading(true);
       setError(null);
       setSuccess(false);
+      const supabase = await createClient();
+      if (!supabase) throw new Error('Could not initialize Supabase client');
 
       const { error } = await supabase
         .from('profiles')

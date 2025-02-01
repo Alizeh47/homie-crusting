@@ -1,22 +1,31 @@
-import type { Metadata } from 'next';
-import { Inter } from 'next/font/google';
-import './globals.css';
+import { ClientProvider } from '@/components/providers/ClientProvider'
+import { Inter, Playfair_Display } from 'next/font/google'
+import './globals.css'
 
-const inter = Inter({ subsets: ['latin'] });
+const inter = Inter({
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-sans',
+})
 
-export const metadata: Metadata = {
-  title: 'EmoConnect - Cultural Exchange Platform',
-  description: 'Explore and share emotional expressions across different cultures',
-};
+const playfair = Playfair_Display({
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-serif',
+})
 
 export default function RootLayout({
   children,
 }: {
-  children: React.ReactNode;
+  children: React.ReactNode
 }) {
   return (
-    <html lang="en">
-      <body className={inter.className}>{children}</body>
+    <html lang="en" suppressHydrationWarning>
+      <body className={`${inter.className} ${playfair.variable} font-sans antialiased bg-background text-foreground`}>
+        <ClientProvider>
+          {children}
+        </ClientProvider>
+      </body>
     </html>
-  );
+  )
 }

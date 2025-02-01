@@ -11,11 +11,17 @@ export function Logo({ variant = 'dark', className }: LogoProps) {
   return (
     <Link href="/" className={cn('flex items-center space-x-2', className)}>
       <Image
-        src="/images/logo.svg"
+        src="/images/logo.png"
         alt="EmoConnect"
         width={32}
         height={32}
         className="w-8 h-8"
+        priority
+        onError={(e) => {
+          console.error('Error loading logo:', e);
+          // Fallback to a text-only logo if image fails to load
+          e.currentTarget.style.display = 'none';
+        }}
       />
       <span
         className={cn(

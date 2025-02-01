@@ -46,7 +46,7 @@ export function Header() {
           <Logo variant={isScrolled ? 'dark' : 'light'} />
 
           {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center space-x-8">
+          <nav className="hidden md:flex items-center space-x-8 ml-16">
             {navigationItems.map((item) => (
               <Link
                 key={item.href}

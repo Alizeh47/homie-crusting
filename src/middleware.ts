@@ -1,39 +1,73 @@
-import { createMiddlewareClient } from '@supabase/auth-helpers-nextjs';
-import { NextResponse } from 'next/server';
-import type { NextRequest } from 'next/server';
+import { createServerClient } from '@supabase/ssr'
+import { NextResponse } from 'next/server'
+import type { NextRequest } from 'next/server'
 
-export async function middleware(req: NextRequest) {
-  const res = NextResponse.next();
-  const supabase = createMiddlewareClient({ req, res });
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
+const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
 
-  const {
-    data: { session },
-  } = await supabase.auth.getSession();
-
-  // Check auth condition
-  if (session?.user) {
-    // If the user is signed in and the current path is / or auth-related,
-    // redirect to /destinations
-    if (
-      req.nextUrl.pathname === '/' ||
-      req.nextUrl.pathname.startsWith('/(auth)')
-    ) {
-      return NextResponse.redirect(new URL('/destinations', req.url));
+export async function middleware(request: NextRequest) {
+  try {
+    if (!supabaseUrl || !supabaseAnonKey) {
+      console.error('Missing Supabase environment variables')
+      return NextResponse.next()
     }
-  } else {
-    // If the user is not signed in and the current path is not / or auth-related,
-    // redirect to /login
-    if (
-      !req.nextUrl.pathname.startsWith('/(auth)') &&
-      req.nextUrl.pathname !== '/'
-    ) {
-      return NextResponse.redirect(new URL('/login', req.url));
-    }
+
+    const response = NextResponse.next({
+      request: {
+        headers: request.headers,
+      },
+    })
+
+    const supabase = createServerClient(
+      supabaseUrl,
+      supabaseAnonKey,
+      {
+        cookies: {
+          get(name: string) {
+            return request.cookies.get(name)?.value
+          },
+          set(name: string, value: string, options: any) {
+            response.cookies.set({
+              name,
+              value,
+              ...options,
+            })
+          },
+          remove(name: string, options: any) {
+            response.cookies.set({
+              name,
+              value: '',
+              ...options,
+            })
+          },
+        },
+      }
+    )
+
+    const { data: { session } } = await supabase.auth.getSession()
+
+    // Add authentication logic here if needed
+    // For example:
+    // if (!session && !request.nextUrl.pathname.startsWith('/auth')) {
+    //   return NextResponse.redirect(new URL('/auth/login', request.url))
+    // }
+
+    return response
+  } catch (error) {
+    console.error('Middleware error:', error)
+    return NextResponse.next()
   }
-
-  return res;
 }
 
 export const config = {
-  matcher: ['/((?!api|_next/static|_next/image|favicon.ico).*)'],
-}; 
+  matcher: [
+    /*
+     * Match all request paths except for the ones starting with:
+     * - api (API routes)
+     * - _next/static (static files)
+     * - _next/image (image optimization files)
+     * - favicon.ico (favicon file)
+     */
+    '/((?!api|_next/static|_next/image|favicon.ico).*)',
+  ],
+} 
