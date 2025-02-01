@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from 'react';
 import { AuthProvider } from '@/context/AuthContext';
-import dynamic from 'next/dynamic';
 
 function BaseClientProvider({ children }: { children: React.ReactNode }) {
   const [mounted, setMounted] = useState(false);
@@ -13,12 +12,11 @@ function BaseClientProvider({ children }: { children: React.ReactNode }) {
   }, []);
 
   if (!mounted) {
-    return <div style={{ visibility: 'hidden' }}>{children}</div>;
+    return null;
   }
 
   return <AuthProvider>{children}</AuthProvider>;
 }
 
-export const ClientProvider = dynamic(() => Promise.resolve(BaseClientProvider), {
-  ssr: false,
-}); 
+// Export the component directly instead of using dynamic import
+export const ClientProvider = BaseClientProvider; 

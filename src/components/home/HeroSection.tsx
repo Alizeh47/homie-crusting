@@ -10,20 +10,18 @@ export function HeroSection() {
       />
       
       {/* Main Content Container */}
-      <div className="container mx-auto px-4 py-16 relative z-10">
-        <div className="max-w-4xl mx-auto text-center">
+      <div className="container mx-auto px-4 py-40 relative z-10">
+        <div className="max-w-4xl mx-auto text-center mt-24">
           {/* Heading */}
-          <h1 className="text-5xl md:text-6xl font-bold mb-4">
-            <span className="text-gray-600">Empowering</span>
+          <h1 className="text-4xl md:text-5xl font-bold mb-4">
+            <span className="text-[#000C24]">Emoconnect</span>
             <br />
-            <span className="text-[#0A2342] font-serif">Emerging Artists</span>
+            <span className="text-[#0A2342] font-serif">cultures and traditions</span>
           </h1>
 
           {/* Description */}
-          <p className="text-gray-600 text-lg md:text-xl mb-8 max-w-2xl mx-auto">
-            We are not just an organization; we are a community of passionate 
-            individuals committed to nurturing the next generation of visionary 
-            artists who push the boundaries of creativity.
+          <p className="text-[#000C24] text-base md:text-lg mb-8 max-w-2xl mx-auto">
+            Discover a world where cultures intertwine and traditions come alive. We are a vibrant community dedicated to celebrating global diversity, sharing ancestral wisdom, and fostering meaningful connections across borders and generations.
           </p>
 
           {/* CTA Buttons */}
@@ -42,22 +40,8 @@ export function HeroSection() {
             </Link>
           </div>
         </div>
-
-        {/* Partners Section */}
-        <div className="mt-16 pt-8 border-t border-gray-200">
-          <p className="text-center text-gray-600 mb-6">
-            Donated by more than 120+ companies worldwide
-          </p>
-          <div className="flex flex-wrap justify-center items-center gap-8 opacity-70">
-            {/* Replace these with your actual partner logos */}
-            <img src="/logos/indeed.svg" alt="Indeed" className="h-8" />
-            <img src="/logos/skyone.svg" alt="Sky One" className="h-8" />
-            <img src="/logos/isowool.svg" alt="Isowool" className="h-8" />
-            <img src="/logos/optimus.svg" alt="Optimus" className="h-8" />
-            <img src="/logos/laserlite.svg" alt="Laserlite" className="h-8" />
-          </div>
-        </div>
       </div>
     </section>
   );
-} 
+}
+

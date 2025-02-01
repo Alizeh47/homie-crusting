@@ -30,27 +30,27 @@ export function Sidebar() {
   const { user } = useAuth();
 
   const navigationItems: NavItem[] = [
-    { href: '/', label: 'Home', icon: <Home className="h-5 w-5" /> },
-    { href: '/destinations', label: 'Travel & Destinations', icon: <Map className="h-5 w-5" /> },
-    { href: '/food', label: 'Food & Cuisine', icon: <Utensils className="h-5 w-5" /> },
-    { href: '/culture', label: 'Cultural Facts', icon: <Globe className="h-5 w-5" /> },
-    { href: '/language', label: 'Language & Words', icon: <Languages className="h-5 w-5" /> },
-    { href: '/reviews', label: 'Reviews & Thoughts', icon: <MessageCircle className="h-5 w-5" /> },
-    { href: '/media', label: 'Media & Influencers', icon: <Film className="h-5 w-5" /> },
-    { href: '/about', label: 'About Us', icon: <Info className="h-5 w-5" /> },
+    { href: '/', label: 'Home', icon: <Home className="h-7 w-7" /> },
+    { href: '/destinations', label: 'Travel & Destinations', icon: <Map className="h-7 w-7" /> },
+    { href: '/food', label: 'Food & Cuisine', icon: <Utensils className="h-7 w-7" /> },
+    { href: '/culture', label: 'Cultural Facts', icon: <Globe className="h-7 w-7" /> },
+    { href: '/language', label: 'Language & Words', icon: <Languages className="h-7 w-7" /> },
+    { href: '/reviews', label: 'Reviews & Thoughts', icon: <MessageCircle className="h-7 w-7" /> },
+    { href: '/media', label: 'Media & Influencers', icon: <Film className="h-7 w-7" /> },
+    { href: '/about', label: 'About Us', icon: <Info className="h-7 w-7" /> },
   ];
 
   return (
     <aside
       className={cn(
         'fixed left-0 top-0 h-screen bg-white shadow-lg transition-all duration-300 z-40',
-        isExpanded ? 'w-64' : 'w-16'
+        isExpanded ? 'w-64' : 'w-20'
       )}
     >
       <div className="flex flex-col h-full">
         {/* Navigation Items */}
-        <nav className="flex-1 py-20 px-3">
-          <div className="space-y-2">
+        <nav className="flex-1 py-20 px-4">
+          <div className="space-y-4">
             {navigationItems.map((item) => {
               const isActive = pathname === item.href;
               return (
@@ -58,7 +58,7 @@ export function Sidebar() {
                   key={item.href}
                   href={item.href}
                   className={cn(
-                    'flex items-center space-x-2 px-3 py-2 rounded-lg transition-colors group relative',
+                    'flex items-center space-x-3 px-4 py-3 rounded-lg transition-colors group relative',
                     isActive
                       ? 'bg-primary text-white'
                       : 'text-gray-700 hover:bg-gray-100'
@@ -80,12 +80,12 @@ export function Sidebar() {
 
         {/* User Profile & Settings */}
         {user && (
-          <div className={cn('p-3 border-t border-gray-200', isExpanded ? 'space-y-2' : '')}>
+          <div className={cn('p-4 border-t border-gray-200', isExpanded ? 'space-y-3' : '')}>
             <Link
               href="/profile"
-              className="flex items-center space-x-2 px-3 py-2 rounded-lg text-gray-700 hover:bg-gray-100 transition-colors group relative"
+              className="flex items-center space-x-3 px-4 py-3 rounded-lg text-gray-700 hover:bg-gray-100 transition-colors group relative"
             >
-              <User className="h-5 w-5" />
+              <User className="h-7 w-7" />
               {isExpanded ? (
                 <span className="text-sm font-medium">Profile</span>
               ) : (
@@ -96,9 +96,9 @@ export function Sidebar() {
             </Link>
             <Link
               href="/settings"
-              className="flex items-center space-x-2 px-3 py-2 rounded-lg text-gray-700 hover:bg-gray-100 transition-colors group relative"
+              className="flex items-center space-x-3 px-4 py-3 rounded-lg text-gray-700 hover:bg-gray-100 transition-colors group relative"
             >
-              <Settings className="h-5 w-5" />
+              <Settings className="h-7 w-7" />
               {isExpanded ? (
                 <span className="text-sm font-medium">Settings</span>
               ) : (
@@ -113,13 +113,13 @@ export function Sidebar() {
         {/* Expand/Collapse Button */}
         <button
           onClick={() => setIsExpanded(!isExpanded)}
-          className="absolute -right-3 top-1/2 transform -translate-y-1/2 bg-white rounded-full p-1 border border-gray-200 shadow-sm hover:bg-gray-50 transition-colors"
+          className="absolute -right-3 top-1/2 transform -translate-y-1/2 bg-white rounded-full p-1.5 border border-gray-200 shadow-sm hover:bg-gray-50 transition-colors"
           aria-label={isExpanded ? 'Collapse sidebar' : 'Expand sidebar'}
         >
           {isExpanded ? (
-            <ChevronLeft className="h-4 w-4 text-gray-600" />
+            <ChevronLeft className="h-5 w-5 text-gray-600" />
           ) : (
-            <ChevronRight className="h-4 w-4 text-gray-600" />
+            <ChevronRight className="h-5 w-5 text-gray-600" />
           )}
         </button>
       </div>

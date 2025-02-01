@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { Search, Menu, X } from 'lucide-react';
+import { Menu, X, Home, Plane, UtensilsCrossed, Landmark, Languages, MessageSquare, Film } from 'lucide-react';
 import { useAuth } from '@/context/AuthContext';
 import { Logo } from '@/components/common/Logo';
 import { SearchBar } from '@/components/common/SearchBar';
@@ -9,7 +9,6 @@ import { cn } from '@/lib/utils';
 export function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const { user } = useAuth();
 
   // Update header background on scroll
   useEffect(() => {
@@ -22,13 +21,13 @@ export function Header() {
   }, []);
 
   const navigationItems = [
-    { href: '/', label: 'Home' },
-    { href: '/destinations', label: 'Travel & Destinations' },
-    { href: '/food', label: 'Food & Cuisine' },
-    { href: '/culture', label: 'Cultural Facts' },
-    { href: '/language', label: 'Language & Words' },
-    { href: '/reviews', label: 'Reviews & Thoughts' },
-    { href: '/media', label: 'Media & Influencers' },
+    { href: '/', label: 'Home', icon: Home },
+    { href: '/destinations', label: 'Travel & Destinations', icon: Plane },
+    { href: '/food', label: 'Food & Cuisine', icon: UtensilsCrossed },
+    { href: '/culture', label: 'Cultural Facts', icon: Landmark },
+    { href: '/language', label: 'Language & Words', icon: Languages },
+    { href: '/reviews', label: 'Reviews & Thoughts', icon: MessageSquare },
+    { href: '/media', label: 'Media & Influencers', icon: Film },
   ];
 
   return (
@@ -46,27 +45,28 @@ export function Header() {
           <Logo variant={isScrolled ? 'dark' : 'light'} />
 
           {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center space-x-8 ml-16">
+          <nav className="hidden md:flex items-center justify-center space-x-10 ml-16">
             {navigationItems.map((item) => (
               <Link
                 key={item.href}
                 href={item.href}
                 className={cn(
-                  'text-sm font-medium transition-colors',
+                  'text-base font-medium transition-colors flex items-center justify-center gap-3',
                   isScrolled
                     ? 'text-gray-700 hover:text-primary'
                     : 'text-white/90 hover:text-white'
                 )}
               >
+                {item.icon && <item.icon className="h-7 w-7" />}
                 {item.label}
               </Link>
             ))}
           </nav>
 
           {/* Right Section */}
-          <div className="flex items-center space-x-4">
+          <div className="flex items-center justify-center space-x-6">
             {/* Search Bar */}
-            <div className="hidden md:block">
+            <div className="hidden md:flex items-center">
               <SearchBar variant={isScrolled ? 'dark' : 'light'} />
             </div>
 
@@ -74,7 +74,7 @@ export function Header() {
             <Link
               href="/contact"
               className={cn(
-                'hidden md:inline-flex px-4 py-2 rounded-full text-sm font-medium transition-colors',
+                'hidden md:inline-flex items-center justify-center px-6 py-3 rounded-full text-base font-medium transition-colors',
                 isScrolled
                   ? 'bg-primary text-white hover:bg-primary-600'
                   : 'bg-white text-gray-900 hover:bg-white/90'
@@ -87,16 +87,16 @@ export function Header() {
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
               className={cn(
-                'md:hidden p-2 rounded-full transition-colors',
+                'md:hidden p-3 rounded-full transition-colors',
                 isScrolled
                   ? 'text-gray-700 hover:bg-gray-100'
                   : 'text-white hover:bg-white/10'
               )}
             >
               {isMobileMenuOpen ? (
-                <X className="h-6 w-6" />
+                <X className="h-8 w-8" />
               ) : (
-                <Menu className="h-6 w-6" />
+                <Menu className="h-8 w-8" />
               )}
             </button>
           </div>
@@ -105,25 +105,26 @@ export function Header() {
         {/* Mobile Navigation */}
         {isMobileMenuOpen && (
           <div className="md:hidden py-4">
-            <nav className="flex flex-col space-y-4">
+            <nav className="flex flex-col items-center space-y-4">
               {navigationItems.map((item) => (
                 <Link
                   key={item.href}
                   href={item.href}
                   className={cn(
-                    'px-4 py-2 text-sm font-medium transition-colors',
+                    'px-6 py-3 text-base font-medium transition-colors w-full text-center flex items-center justify-center gap-5',
                     isScrolled
                       ? 'text-gray-700 hover:bg-gray-100'
                       : 'text-white hover:bg-white/10'
                   )}
                   onClick={() => setIsMobileMenuOpen(false)}
                 >
+                  {item.icon && <item.icon className="h-8 w-8" />}
                   {item.label}
                 </Link>
               ))}
               <Link
                 href="/contact"
-                className="px-4 py-2 text-sm font-medium bg-primary text-white rounded-lg"
+                className="px-6 py-3 text-base font-medium bg-primary text-white rounded-lg w-full text-center flex items-center justify-center"
                 onClick={() => setIsMobileMenuOpen(false)}
               >
                 Contact Us

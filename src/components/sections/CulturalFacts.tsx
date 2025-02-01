@@ -93,7 +93,7 @@ export function CulturalFacts() {
   };
 
   return (
-    <section className="py-20 bg-cream-50">
+    <section className="py-20 bg-[#cdb891]">
       {/* Header Section */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
