@@ -3,7 +3,7 @@ import Image from 'next/image';
 
 const WhoWeAreSection = () => {
   return (
-    <section className="relative bg-[#cdb891] py-24">
+    <section className="relative bg-[#cdb891] py-16">
       {/* Page Counter */}
       <div className="absolute top-8 right-8">
         <span className="font-inter text-lg text-gray-600">02 - 03</span>

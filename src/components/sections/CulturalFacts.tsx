@@ -120,7 +120,7 @@ export function CulturalFacts() {
       <div className="relative max-w-6xl mx-auto mb-20 aspect-[2/1] bg-white rounded-2xl shadow-lg overflow-hidden">
         <motion.div
           initial={{ opacity: 0 }}
-          animate={{ opacity: 0.2 }}
+          animate={{ opacity: 0.6 }}
           transition={{ duration: 1 }}
           className="absolute inset-0 bg-world-map bg-cover bg-center"
         />
@@ -248,7 +248,19 @@ export function CulturalFacts() {
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.6 }}
               className="relative h-64 lg:h-full"
+              style={{
+                backgroundImage: 'url(/path/to/your/image.jpg)',
+                backgroundSize: 'cover',
+                backgroundPosition: 'center',
+              }}
             >
+              <div className="absolute inset-0">
+                <img 
+                  src="/images/backgrounds/stars-bg.jpg" 
+                  alt="Background" 
+                  className="w-full h-full object-cover"
+                />
+              </div>
               <div className="absolute inset-0 bg-globe-hands bg-cover bg-center opacity-75" />
               <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-transparent" />
               {/* Animated stars */}

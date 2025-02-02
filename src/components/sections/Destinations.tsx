@@ -171,10 +171,10 @@ export function DestinationsSection() {
             <img
               src={destinationOfTheMonth.image}
               alt={destinationOfTheMonth.title}
-              className="w-full h-full object-cover opacity-40"
+              className="w-full h-full object-cover"
             />
           </div>
-          <div className="relative px-8 py-12 lg:px-12 lg:py-16">
+          <div className="relative px-8 py-12 lg:px-12 lg:py-16 bg-black/40">
             <div className="max-w-2xl">
               <h3 className="text-3xl font-serif font-bold text-white mb-4">
                 {destinationOfTheMonth.title}

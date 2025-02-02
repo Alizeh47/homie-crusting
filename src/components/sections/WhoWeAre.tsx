@@ -7,31 +7,26 @@ export function WhoWeAre() {
   return (
     <section className={cn(
       'section relative min-h-[90vh]',
-      'bg-[#cdb891] flex items-center justify-center'
+      'bg-[#C0AE91] flex items-center justify-center'
     )}>
       {/* Page Counter */}
       <div className="absolute top-8 right-8 font-sans text-lg text-gray-600 font-medium">
         02 - 03
       </div>
 
-      {/* Left Decorative Element */}
-      <div className="absolute left-0 top-1/2 -translate-y-1/2">
-        <div className="w-48 h-48 bg-[#B4A89B] rounded-full opacity-20" />
-        <div className="absolute inset-0 flex items-center justify-center">
-          <div className="w-32 h-32 border-2 border-white rounded-full" />
-        </div>
-      </div>
-
-      {/* Right Decorative Element */}
-      <div className="absolute right-0 top-1/2 -translate-y-1/2">
-        <div className="w-48 h-48 bg-[#617D8B] rounded-full opacity-20" />
-        <div className="absolute inset-0 flex items-center justify-center">
-          <div className="w-32 h-32 border-2 border-white rounded-full transform rotate-45" />
+      {/* Center Illustration */}
+      <div className="absolute inset-0 pointer-events-none">
+        <div className="relative w-full h-full">
+          <img 
+            src="/illustrations/cultural-center.png" 
+            alt="Cultural illustration" 
+            className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[1000px] max-w-none h-auto opacity-30"
+          />
         </div>
       </div>
 
       {/* Main Content */}
-      <div className="container max-w-4xl text-center px-4">
+      <div className="container max-w-4xl text-center px-4 relative z-10">
         <h2 className="font-playfair text-5xl font-bold text-[#0A2647] mb-8">
           Who We Are
         </h2>

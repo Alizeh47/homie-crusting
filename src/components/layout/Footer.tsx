@@ -1,122 +1,77 @@
+'use client';
+
 import Link from 'next/link';
-import { Facebook, Twitter, Instagram, Youtube, Heart } from 'lucide-react';
-import { Logo } from '@/components/common/Logo';
 
 export function Footer() {
-  const footerLinks = {
-    product: [
-      { label: 'Features', href: '/features' },
-      { label: 'Pricing', href: '/pricing' },
-      { label: 'Blog', href: '/blog' },
-    ],
-    company: [
-      { label: 'About Us', href: '/about' },
-      { label: 'Careers', href: '/careers' },
-      { label: 'Contact', href: '/contact' },
-    ],
-    legal: [
-      { label: 'Privacy Policy', href: '/privacy' },
-      { label: 'Terms of Service', href: '/terms' },
-      { label: 'Cookie Policy', href: '/cookies' },
-    ],
-  };
-
-  const socialLinks = [
-    { icon: Facebook, href: 'https://facebook.com' },
-    { icon: Twitter, href: 'https://twitter.com' },
-    { icon: Instagram, href: 'https://instagram.com' },
-    { icon: Youtube, href: 'https://youtube.com' },
-  ];
-
   return (
-    <footer className="bg-gray-900 text-white">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8">
+    <footer className="bg-gray-50 py-20">
+      <div className="container mx-auto px-4">
+        {/* Let's Connect Section */}
+        <div className="text-center mb-16">
+          <h2 className="text-5xl font-serif tracking-wide mb-8">
+            LET'S CONNECT WITH US
+          </h2>
+          <div className="max-w-xl mx-auto flex gap-4">
+            <input
+              type="email"
+              placeholder="Enter your e-mail"
+              className="flex-1 px-6 py-3 rounded-full border border-gray-200 focus:outline-none focus:border-gray-400"
+            />
+            <button className="px-8 py-3 bg-black text-white rounded-full font-medium hover:bg-gray-800 transition-colors">
+              SUBSCRIBE NOW
+            </button>
+          </div>
+        </div>
+
+        {/* Footer Content Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-5 gap-12 mb-12">
           {/* Logo and Description */}
-          <div className="lg:col-span-2">
-            <Logo variant="light" />
-            <p className="mt-4 text-gray-400 max-w-md">
-              Connecting hearts and minds across cultures through shared emotional experiences
-              and understanding.
+          <div className="md:col-span-2">
+            <h3 className="font-serif text-2xl mb-4">Homie</h3>
+            <p className="text-gray-600 mb-4">
+              A platform dedicated to exploring and understanding emotions across different cultures,
+              fostering connections and shared experiences worldwide.
             </p>
-            <div className="flex space-x-4 mt-6">
-              {socialLinks.map((social, index) => {
-                const Icon = social.icon;
-                return (
-                  <a
-                    key={index}
-                    href={social.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-gray-400 hover:text-white transition-colors"
-                  >
-                    <Icon className="h-5 w-5" />
-                  </a>
-                );
-              })}
-            </div>
           </div>
 
-          {/* Footer Links */}
+          {/* Quick Links */}
           <div>
-            <h3 className="text-sm font-semibold uppercase tracking-wider">Product</h3>
-            <ul className="mt-4 space-y-2">
-              {footerLinks.product.map((link) => (
-                <li key={link.href}>
-                  <Link
-                    href={link.href}
-                    className="text-gray-400 hover:text-white transition-colors"
-                  >
-                    {link.label}
-                  </Link>
-                </li>
-              ))}
+            <ul className="space-y-3">
+              <li><Link href="/about" className="hover:text-gray-600">About Us</Link></li>
+              <li><Link href="/emotions" className="hover:text-gray-600">Emotions</Link></li>
+              <li><Link href="/contact" className="hover:text-gray-600">Contact</Link></li>
             </ul>
           </div>
 
+          {/* Resources */}
           <div>
-            <h3 className="text-sm font-semibold uppercase tracking-wider">Company</h3>
-            <ul className="mt-4 space-y-2">
-              {footerLinks.company.map((link) => (
-                <li key={link.href}>
-                  <Link
-                    href={link.href}
-                    className="text-gray-400 hover:text-white transition-colors"
-                  >
-                    {link.label}
-                  </Link>
-                </li>
-              ))}
+            <ul className="space-y-3">
+              <li><Link href="/compare" className="hover:text-gray-600">Compare Plans</Link></li>
+              <li><Link href="/resources" className="hover:text-gray-600">Resources</Link></li>
+              <li><Link href="/safety" className="hover:text-gray-600">Health & Safety</Link></li>
             </ul>
           </div>
 
+          {/* Legal & Social */}
           <div>
-            <h3 className="text-sm font-semibold uppercase tracking-wider">Legal</h3>
-            <ul className="mt-4 space-y-2">
-              {footerLinks.legal.map((link) => (
-                <li key={link.href}>
-                  <Link
-                    href={link.href}
-                    className="text-gray-400 hover:text-white transition-colors"
-                  >
-                    {link.label}
-                  </Link>
-                </li>
-              ))}
+            <ul className="space-y-3">
+              <li><Link href="/terms" className="hover:text-gray-600">Terms of service</Link></li>
+              <li><Link href="/privacy" className="hover:text-gray-600">Privacy & Policy</Link></li>
+              <li><Link href="/beta" className="hover:text-gray-600">Request Beta</Link></li>
             </ul>
           </div>
         </div>
 
-        {/* Bottom Bar */}
-        <div className="mt-12 pt-8 border-t border-gray-800">
-          <div className="flex flex-col md:flex-row justify-between items-center">
-            <p className="text-gray-400 text-sm">
-              © {new Date().getFullYear()} EmoConnect. All rights reserved.
-            </p>
-            <p className="text-gray-400 text-sm mt-4 md:mt-0 flex items-center">
-              Made with <Heart className="h-4 w-4 mx-1 text-red-500" /> by the EmoConnect Team
-            </p>
-          </div>
+        {/* Social Links */}
+        <div className="flex justify-end gap-6 mb-8">
+          <Link href="https://facebook.com" className="hover:text-gray-600">Facebook</Link>
+          <Link href="https://instagram.com" className="hover:text-gray-600">Instagram</Link>
+          <Link href="https://twitter.com" className="hover:text-gray-600">Twitter</Link>
+        </div>
+
+        {/* Copyright */}
+        <div className="text-center text-sm text-gray-500">
+          ©2024 Homie | All Rights Reserved
         </div>
       </div>
     </footer>

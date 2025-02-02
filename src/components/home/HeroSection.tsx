@@ -2,16 +2,20 @@ import Link from 'next/link';
 
 export function HeroSection() {
   return (
-    <section className="relative w-full min-h-[600px]">
+    <section className="relative w-full min-h-[600px] pb-16">
       {/* Background Image */}
       <div 
-        className="absolute inset-0 z-0 bg-cover bg-center bg-no-repeat"
-        style={{ backgroundImage: "url('/illustrations/hero-bg.jpg')" }}
+        className="absolute inset-0 z-0 bg-cover bg-center bg-no-repeat w-full"
+        style={{ 
+          backgroundImage: "url('/illustrations/hero-bg.jpg')",
+          backgroundSize: "100% 100%",
+          backgroundPosition: "center"
+        }}
       />
       
       {/* Main Content Container */}
-      <div className="container mx-auto px-4 py-40 relative z-10">
-        <div className="max-w-4xl mx-auto text-center mt-24">
+      <div className="container mx-auto px-4 py-72 relative z-10">
+        <div className="max-w-4xl mx-auto text-center mt-64">
           {/* Heading */}
           <h1 className="text-4xl md:text-5xl font-bold mb-4">
             <span className="text-[#000C24]">Emoconnect</span>
