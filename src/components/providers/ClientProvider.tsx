@@ -1,22 +1,16 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { ReactNode } from 'react';
 import { AuthProvider } from '@/context/AuthContext';
 
-function BaseClientProvider({ children }: { children: React.ReactNode }) {
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    setMounted(true);
-    return () => setMounted(false);
-  }, []);
-
-  if (!mounted) {
-    return null;
-  }
-
-  return <AuthProvider>{children}</AuthProvider>;
+interface ClientProviderProps {
+  children: ReactNode;
 }
 
-// Export the component directly instead of using dynamic import
-export const ClientProvider = BaseClientProvider; 
+export function ClientProvider({ children }: ClientProviderProps) {
+  return (
+    <AuthProvider>
+      {children}
+    </AuthProvider>
+  );
+} 

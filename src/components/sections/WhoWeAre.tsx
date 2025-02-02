@@ -7,7 +7,7 @@ export function WhoWeAre() {
   return (
     <section className={cn(
       'section relative min-h-[90vh]',
-      'bg-[#C0AE91] flex items-center justify-center'
+      'bg-[#E4E4E1] flex items-center justify-center'
     )}>
       {/* Page Counter */}
       <div className="absolute top-8 right-8 font-sans text-lg text-gray-600 font-medium">

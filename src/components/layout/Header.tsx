@@ -24,12 +24,12 @@ export function Header() {
 
   const navigationItems = [
     { href: '/', label: 'Home', icon: Home },
-    { href: '/destinations', label: 'Travel & Destinations', icon: Plane },
-    { href: '/food', label: 'Food & Cuisine', icon: UtensilsCrossed },
+    { href: '/travel', label: 'Destinations', icon: Plane },
+    { href: '/food', label: 'Food ', icon: UtensilsCrossed },
     { href: '/culture', label: 'Cultural Facts', icon: Landmark },
-    { href: '/language', label: 'Language & Words', icon: Languages },
-    { href: '/reviews', label: 'Reviews & Thoughts', icon: MessageSquare },
-    { href: '/media', label: 'Media & Influencers', icon: Film },
+    { href: '/language', label: 'Language', icon: Languages },
+    { href: '/reviews', label: 'Reviews', icon: MessageSquare },
+    { href: '/media', label: 'Media ', icon: Film },
   ];
 
   return (
@@ -47,13 +47,13 @@ export function Header() {
           <Logo variant={isScrolled ? 'dark' : 'light'} />
 
           {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center space-x-8 ml-8">
+          <nav className="hidden md:flex items-center space-x-12 ml-16">
             {navigationItems.map((item) => (
               <Link
                 key={item.href}
                 href={item.href}
                 className={cn(
-                  'text-sm font-medium transition-colors flex items-center justify-center gap-2',
+                  'text-sm font-medium transition-colors flex items-center justify-center gap-2 whitespace-nowrap',
                   isScrolled
                     ? 'text-gray-700 hover:text-primary'
                     : 'text-white/90 hover:text-white'
@@ -66,7 +66,7 @@ export function Header() {
           </nav>
 
           {/* Right Section */}
-          <div className="flex items-center justify-end space-x-4 ml-auto">
+          <div className="flex items-center justify-end space-x-2 ml-8">
             {/* Search Bar */}
             <div className="hidden md:flex items-center">
               <SearchBar variant={isScrolled ? 'dark' : 'light'} />
@@ -76,7 +76,7 @@ export function Header() {
             <Link
               href="/contact"
               className={cn(
-                'hidden md:inline-flex items-center justify-center px-5 py-2 rounded-full text-sm font-medium transition-colors',
+                'hidden md:inline-flex items-center justify-center px-4 py-1.5 rounded-full text-sm font-medium transition-colors whitespace-nowrap',
                 isScrolled
                   ? 'bg-primary text-white hover:bg-primary-600'
                   : 'bg-white text-gray-900 hover:bg-white/90'

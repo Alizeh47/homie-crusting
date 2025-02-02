@@ -1,3 +1,5 @@
+'use client';
+
 import { useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
@@ -31,7 +33,7 @@ export function Sidebar() {
 
   const navigationItems: NavItem[] = [
     { href: '/', label: 'Home', icon: <Home className="h-7 w-7" /> },
-    { href: '/destinations', label: 'Travel & Destinations', icon: <Map className="h-7 w-7" /> },
+    { href: '/travel', label: 'Travel & Destinations', icon: <Map className="h-7 w-7" /> },
     { href: '/food', label: 'Food & Cuisine', icon: <Utensils className="h-7 w-7" /> },
     { href: '/culture', label: 'Cultural Facts', icon: <Globe className="h-7 w-7" /> },
     { href: '/language', label: 'Language & Words', icon: <Languages className="h-7 w-7" /> },
