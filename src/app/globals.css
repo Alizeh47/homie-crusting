@@ -29,10 +29,6 @@
   }
 
   /* Base styles */
-  * {
-    @apply border-border;
-  }
-
   html {
     @apply scroll-smooth antialiased;
   }
@@ -126,5 +122,5 @@
 
 /* Custom Selection */
 ::selection {
-  @apply bg-secondary-500/20 text-secondary-900;
+  @apply bg-secondary-500 bg-opacity-20 text-secondary-900;
 }

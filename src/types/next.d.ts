@@ -13,3 +13,6 @@ declare module 'next/image' {
 
   export default function Image(props: Props): JSX.Element
 } 
+
+export default function DiversityBanner() {
+} 
