@@ -96,7 +96,7 @@ export function FoodSection() {
   return (
     <div className="bg-white">
       {/* Hero Section */}
-      <section className="relative min-h-[600px] bg-[#cdb891] overflow-hidden pt-32">
+      <section className="relative min-h-[600px] bg-[#A7BBA0] overflow-hidden pt-32">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div>
@@ -178,7 +178,7 @@ export function FoodSection() {
                     className="object-cover transition-transform duration-500 hover:scale-110"
                   />
                   {hoveredDish === dish.id && (
-                    <div className="absolute inset-0 bg-black/70 p-8 flex flex-col justify-center text-white transition-opacity duration-300">
+                    <div className="absolute inset-0 bg-black/70 p-8 flex flex-col justify-left text-white transition-opacity duration-300">
                       <h4 className="text-xl font-medium mb-6">Key Ingredients:</h4>
                       <ul className="space-y-3">
                         {dish.ingredients.map((ingredient) => (
@@ -198,7 +198,7 @@ export function FoodSection() {
       </section>
 
       {/* Soul Food Quiz Section */}
-      <section className="py-20 bg-[#cdb891]">
+      <section className="py-20 bg-[#A7BBA0]">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-3xl font-serif font-bold text-gray-900 mb-4">
             Find Your Soul Food

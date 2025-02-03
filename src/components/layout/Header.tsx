@@ -43,8 +43,10 @@ export function Header() {
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
         <div className="flex justify-between items-center py-3">
-          {/* Logo */}
-          <Logo variant={isScrolled ? 'dark' : 'light'} />
+          {/* Logo with adjusted margin */}
+          <div className="-ml-12 sm:-ml-16">
+            <Logo variant={isScrolled ? 'dark' : 'light'} />
+          </div>
 
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center space-x-12 ml-16">

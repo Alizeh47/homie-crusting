@@ -252,6 +252,3 @@ A 'Food & Emotions' guide, using an engaging visual timeline with clickableemoti
 A dynamic user poll that visually displays real-time voting results on cuisine preferences. 
 Incorporate subtle hover effects, drop shadows for a sense of depth, and smooth transition animations. Ensure the UI remains clean, engaging, and easy to navigate, focusing on storytelling through food."** 
 
-
-
- 

@@ -1,0 +1,33 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model PollOption {
+  id          String   @id @default(cuid())
+  title       String
+  description String
+  votes       Int      @default(0)
+  icon        String   // Store the icon name
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model UserVote {
+  id          String   @id @default(cuid())
+  optionId    String
+  userId      String   // This could be an IP address or session ID
+  createdAt   DateTime @default(now())
+
+  @@unique([userId, optionId])
+}
