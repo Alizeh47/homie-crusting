@@ -26,19 +26,17 @@ interface ClientLayoutProps {
 
 export function ClientLayout({ children }: ClientLayoutProps) {
   return (
-    <html lang="en" suppressHydrationWarning>
-      <body className={`${inter.className} ${playfair.variable} font-sans antialiased bg-background text-foreground`}>
-        <ClientProvider>
-          <div className="flex flex-col min-h-screen">
-            <Header />
-            <Sidebar />
-            <main className="flex-grow pl-20">
-              {children}
-            </main>
-            <Footer />
-          </div>
-        </ClientProvider>
-      </body>
-    </html>
+    <ClientProvider>
+      <div className={`${inter.className} ${playfair.variable} font-sans antialiased bg-background text-foreground min-h-screen`}>
+        <div className="flex flex-col min-h-screen">
+          <Header />
+          <Sidebar />
+          <main className="flex-grow pl-20">
+            {children}
+          </main>
+          <Footer />
+        </div>
+      </div>
+    </ClientProvider>
   );
 }

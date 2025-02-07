@@ -1,0 +1,21 @@
+.error-message {
+  background-color: #ffebee;
+  color: #c62828;
+  padding: 10px;
+  border-radius: 4px;
+  margin-bottom: 20px;
+  text-align: center;
+  border: 1px solid #ef9a9a;
+}
+
+.login-container,
+.signup-container {
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+button:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+} 

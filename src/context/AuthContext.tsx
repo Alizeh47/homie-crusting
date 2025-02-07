@@ -1,50 +1,32 @@
 'use client';
 
 import { createContext, useContext, useEffect, useState } from 'react';
-import { createClient, type User } from '@/lib/supabase/client';
-import type { SupabaseClient } from '@supabase/supabase-js';
-import type { Database } from '@/types/supabase';
+import { supabase } from '@/lib/supabase/client';
+import type { User } from '@supabase/supabase-js';
 
 interface AuthContextType {
   user: User | null;
   loading: boolean;
-  signIn: (email: string, password: string) => Promise<void>;
-  signUp: (email: string, password: string) => Promise<void>;
+  signIn: (email: string, password: string) => Promise<{ error: string | null }>;
+  signUp: (email: string, password: string) => Promise<{ error: string | null }>;
   signOut: () => Promise<void>;
-  resetPassword: (email: string) => Promise<void>;
+  resetPassword: (email: string) => Promise<{ error: string | null }>;
 }
 
 const AuthContext = createContext<AuthContextType>({
   user: null,
   loading: true,
-  signIn: async () => {},
-  signUp: async () => {},
+  signIn: async () => ({ error: null }),
+  signUp: async () => ({ error: null }),
   signOut: async () => {},
-  resetPassword: async () => {},
+  resetPassword: async () => ({ error: null }),
 });
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
-  const [supabase, setSupabase] = useState<SupabaseClient<Database> | null>(null);
 
   useEffect(() => {
-    const initSupabase = async () => {
-      try {
-        const client = await createClient();
-        setSupabase(client);
-      } catch (error) {
-        console.error('Error initializing Supabase client:', error);
-        setLoading(false);
-      }
-    };
-    
-    initSupabase();
-  }, []);
-
-  useEffect(() => {
-    if (!supabase) return;
-    
     let mounted = true;
 
     const getUser = async () => {
@@ -77,36 +59,114 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       mounted = false;
       subscription.unsubscribe();
     };
-  }, [supabase]);
+  }, []);
 
   const signIn = async (email: string, password: string) => {
-    if (!supabase) throw new Error('Supabase client not initialized');
-    const { error } = await supabase.auth.signInWithPassword({
-      email,
-      password,
-    });
-    if (error) throw error;
+    try {
+      const { error } = await supabase.auth.signInWithPassword({
+        email,
+        password,
+      });
+      
+      if (error) {
+        // Log error for debugging but don't expose to user
+        console.error('Sign in error:', error);
+        
+        // Return user-friendly messages
+        if (error.message.includes('Invalid login credentials')) {
+          return { error: 'Incorrect email or password. Please try again.' };
+        }
+        if (error.message.includes('Email not confirmed')) {
+          return { error: 'Please verify your email address before signing in.' };
+        }
+        if (error.message.includes('Unable to connect')) {
+          return { error: 'Please check your internet connection and try again.' };
+        }
+        // Generic error for all other cases
+        return { error: 'Unable to sign in. Please try again.' };
+      }
+      
+      return { error: null };
+    } catch (error) {
+      // Log error for debugging
+      console.error('Sign in error:', error);
+      return { error: 'Please check your internet connection and try again.' };
+    }
   };
 
   const signUp = async (email: string, password: string) => {
-    if (!supabase) throw new Error('Supabase client not initialized');
-    const { error } = await supabase.auth.signUp({
-      email,
-      password,
-    });
-    if (error) throw error;
+    try {
+      const { error } = await supabase.auth.signUp({
+        email,
+        password,
+        options: {
+          emailRedirectTo: `${window.location.origin}/auth/callback`
+        }
+      });
+      
+      if (error) {
+        // Log error for debugging
+        console.error('Sign up error:', error);
+        
+        // Return user-friendly messages
+        if (error.message.includes('Email rate limit')) {
+          return { error: 'Please wait a moment before trying again.' };
+        }
+        if (error.message.includes('already registered')) {
+          return { error: 'This email is already registered. Please sign in instead.' };
+        }
+        if (error.message.includes('Unable to connect')) {
+          return { error: 'Please check your internet connection and try again.' };
+        }
+        // Generic error for all other cases
+        return { error: 'Unable to create account. Please try again.' };
+      }
+      
+      return { error: null };
+    } catch (error) {
+      // Log error for debugging
+      console.error('Sign up error:', error);
+      return { error: 'Please check your internet connection and try again.' };
+    }
   };
 
   const signOut = async () => {
-    if (!supabase) throw new Error('Supabase client not initialized');
-    const { error } = await supabase.auth.signOut();
-    if (error) throw error;
+    try {
+      const { error } = await supabase.auth.signOut();
+      if (error) throw error;
+    } catch (error) {
+      console.error('Sign out error:', error);
+      throw new Error('Unable to sign out. Please try again.');
+    }
   };
 
   const resetPassword = async (email: string) => {
-    if (!supabase) throw new Error('Supabase client not initialized');
-    const { error } = await supabase.auth.resetPasswordForEmail(email);
-    if (error) throw error;
+    try {
+      const { error } = await supabase.auth.resetPasswordForEmail(email, {
+        redirectTo: `${window.location.origin}/auth/callback`
+      });
+      
+      if (error) {
+        // Log error for debugging
+        console.error('Reset password error:', error);
+        
+        // Return user-friendly messages
+        if (error.message.includes('rate limit')) {
+          return { error: 'Please wait a moment before trying again.' };
+        }
+        if (error.message.includes('Unable to connect')) {
+          return { error: 'Please check your internet connection and try again.' };
+        }
+        // Generic message for all other cases to maintain privacy
+        return { error: 'If an account exists, you will receive a reset link.' };
+      }
+      
+      return { error: null };
+    } catch (error) {
+      // Log error for debugging
+      console.error('Reset password error:', error);
+      return { error: 'Please check your internet connection and try again.' };
+    }
   };
 
   const value = {

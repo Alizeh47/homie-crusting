@@ -24,7 +24,7 @@
     "@radix-ui/react-popper": "^1.2.1",
     "@radix-ui/react-slot": "^1.0.2",
     "@radix-ui/react-toast": "^1.2.5",
-    "@supabase/ssr": "latest",
+    "@supabase/ssr": "^0.5.2",
     "@supabase/supabase-js": "latest",
     "buffer": "^6.0.3",
     "bufferutil": "^4.0.9",

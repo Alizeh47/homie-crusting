@@ -16,10 +16,16 @@ export function ResetPasswordForm() {
     try {
       setError(null);
       setLoading(true);
-      await resetPassword(email);
-      setSuccess(true);
+      const result = await resetPassword(email);
+      
+      if (result.error) {
+        setError(result.error);
+      } else {
+        setSuccess(true);
+        setEmail('');
+      }
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'An error occurred');
+      setError('Unable to send reset email. Please try again later.');
     } finally {
       setLoading(false);
     }
@@ -45,15 +51,16 @@ export function ResetPasswordForm() {
 
         {success ? (
           <div className="rounded-md bg-green-50 p-4">
-            <div className="text-sm text-green-700">
-              Check your email for a password reset link.
+            <div className="text-sm text-green-700 text-center">
+              <p className="font-medium">Check your email</p>
+              <p>If an account exists with this email, you will receive a reset link.</p>
             </div>
           </div>
         ) : (
           <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
             {error && (
-              <div className="rounded-md bg-red-50 p-4">
-                <div className="text-sm text-red-700">{error}</div>
+              <div className="rounded-md bg-blue-50 p-4">
+                <div className="text-sm text-blue-700 text-center">{error}</div>
               </div>
             )}
             <div>
@@ -68,6 +75,7 @@ export function ResetPasswordForm() {
                 required
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
+                disabled={loading}
                 className="appearance-none rounded-md relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-primary focus:border-primary sm:text-sm"
                 placeholder="Email address"
               />
@@ -79,7 +87,7 @@ export function ResetPasswordForm() {
                 disabled={loading}
                 className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-primary hover:bg-primary-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                {loading ? 'Sending reset link...' : 'Send reset link'}
+                {loading ? 'Sending...' : 'Send reset link'}
               </button>
             </div>
           </form>

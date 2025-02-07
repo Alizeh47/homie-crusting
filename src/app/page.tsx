@@ -22,12 +22,12 @@ export default function HomePage() {
       <main className={cn(
         'relative',
         'transition-all duration-300 ease-in-out',
-        'pt-24 lg:pt-28', // Header height + spacing
-        'lg:pl-20', // Collapsed sidebar width + spacing
+        'pt-16 lg:pt-20', // Reduced top padding
+        'lg:pl-8', // Reduced sidebar spacing
         'pb-20' // Bottom padding
       )}>
-        <div className="container">
-          <div className="space-y-24 md:space-y-32">
+        <div className="w-full px-2 md:px-4 max-w-[4000px] mx-auto">
+          <div className="space-y-24 md:space-y-24">
             <HeroSection />
             <WhoWeAre />
             <CulturalFacts />

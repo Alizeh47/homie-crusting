@@ -16,9 +16,12 @@ import {
   User,
   Settings,
   Info,
+  LogIn,
+  UserPlus,
 } from 'lucide-react';
 import { useAuth } from '@/context/AuthContext';
 import { cn } from '@/lib/utils';
+import { motion } from 'framer-motion';
 
 interface NavItem {
   href: string;
@@ -45,14 +48,14 @@ export function Sidebar() {
   return (
     <aside
       className={cn(
-        'fixed left-0 top-0 h-screen bg-white shadow-lg transition-all duration-300 z-40',
+        'fixed left-0 top-16 h-[calc(100vh-4rem)] bg-white shadow-lg transition-all duration-300 z-40',
         isExpanded ? 'w-64' : 'w-20'
       )}
     >
       <div className="flex flex-col h-full">
         {/* Navigation Items */}
-        <nav className="flex-1 py-20 px-4">
-          <div className="space-y-4">
+        <nav className="flex-1 py-6 px-4">
+          <div className="space-y-2">
             {navigationItems.map((item) => {
               const isActive = pathname === item.href;
               return (
@@ -62,7 +65,7 @@ export function Sidebar() {
                   className={cn(
                     'flex items-center space-x-3 px-4 py-3 rounded-lg transition-colors group relative',
                     isActive
-                      ? 'bg-primary text-white'
+                      ? 'bg-[#011f4b] text-white'
                       : 'text-gray-700 hover:bg-gray-100'
                   )}
                 >
@@ -70,19 +73,63 @@ export function Sidebar() {
                   {isExpanded ? (
                     <span className="text-sm font-medium">{item.label}</span>
                   ) : (
-                    <div className="absolute left-full ml-2 px-2 py-1 bg-gray-900 text-white text-xs rounded opacity-0 pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto transition-opacity whitespace-nowrap">
+                    <div className="absolute left-full ml-2 px-2 py-1 bg-[#011f4b] text-white text-xs rounded opacity-0 pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto transition-opacity whitespace-nowrap">
                       {item.label}
                     </div>
                   )}
                 </Link>
               );
             })}
+
+            {/* Authentication Buttons - Moved closer to About Us */}
+            {!user && (
+              <div className="space-y-2 mt-2">
+                <Link href="/login">
+                  <motion.div
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
+                    className={cn(
+                      'flex items-center px-4 py-3 rounded-lg transition-colors group relative',
+                      'bg-white text-[#00072D] hover:bg-gray-50 border-2 border-[#00072D]'
+                    )}
+                  >
+                    <LogIn className="h-7 w-7" />
+                    {isExpanded ? (
+                      <span className="text-sm font-medium ml-3">Log In</span>
+                    ) : (
+                      <div className="absolute left-full ml-2 px-2 py-1 bg-[#00072D] text-white text-xs rounded opacity-0 pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto transition-opacity">
+                        Log In
+                      </div>
+                    )}
+                  </motion.div>
+                </Link>
+                <Link href="/signup">
+                  <motion.div
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
+                    className={cn(
+                      'flex items-center px-4 py-3 rounded-lg transition-colors group relative',
+                      'bg-[#00072D] text-white hover:bg-[#00072D]/90'
+                    )}
+                  >
+                    <UserPlus className="h-7 w-7" />
+                    {isExpanded ? (
+                      <span className="text-sm font-medium ml-3">Sign Up</span>
+                    ) : (
+                      <div className="absolute left-full ml-2 px-2 py-1 bg-[#00072D] text-white text-xs rounded opacity-0 pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto transition-opacity">
+                        Sign Up
+                      </div>
+                    )}
+                  </motion.div>
+                </Link>
+              </div>
+            )}
           </div>
         </nav>
 
-        {/* User Profile & Settings */}
+        {/* User Profile & Settings - Only shown when logged in */}
         {user && (
-          <div className={cn('p-4 border-t border-gray-200', isExpanded ? 'space-y-3' : '')}>
+          <div className="p-4 border-t border-gray-200 space-y-2">
             <Link
               href="/profile"
               className="flex items-center space-x-3 px-4 py-3 rounded-lg text-gray-700 hover:bg-gray-100 transition-colors group relative"
@@ -91,7 +138,7 @@ export function Sidebar() {
               {isExpanded ? (
                 <span className="text-sm font-medium">Profile</span>
               ) : (
-                <div className="absolute left-full ml-2 px-2 py-1 bg-gray-900 text-white text-xs rounded opacity-0 pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto transition-opacity">
+                <div className="absolute left-full ml-2 px-2 py-1 bg-[#011f4b] text-white text-xs rounded opacity-0 pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto transition-opacity">
                   Profile
                 </div>
               )}
@@ -104,7 +151,7 @@ export function Sidebar() {
               {isExpanded ? (
                 <span className="text-sm font-medium">Settings</span>
               ) : (
-                <div className="absolute left-full ml-2 px-2 py-1 bg-gray-900 text-white text-xs rounded opacity-0 pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto transition-opacity">
+                <div className="absolute left-full ml-2 px-2 py-1 bg-[#011f4b] text-white text-xs rounded opacity-0 pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto transition-opacity">
                   Settings
                 </div>
               )}
