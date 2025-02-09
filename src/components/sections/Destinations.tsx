@@ -196,12 +196,12 @@ export function DestinationsSection() {
                   {destinationOfTheMonth.testimonial.author} from {destinationOfTheMonth.testimonial.location}
                 </footer>
               </blockquote>
+              {/* CTA Button */}
               <Link
-                href="/destinations/kyoto"
-                className="inline-flex items-center px-6 py-3 rounded-full bg-primary text-white font-medium hover:bg-primary-600 transition-colors group"
+                href="/travel"
+                className="inline-block px-8 py-3 bg-[#05342b] text-white rounded-lg font-medium hover:bg-[#05342b]/90 transition-all duration-300 text-center mt-8"
               >
                 Plan Your Trip
-                <ArrowRight className="ml-2 h-5 w-5 transform group-hover:translate-x-1 transition-transform" />
               </Link>
             </div>
           </div>

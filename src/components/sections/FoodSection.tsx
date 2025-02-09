@@ -4,6 +4,7 @@ import { useState, useCallback } from 'react';
 import Image from 'next/image';
 import { ArrowRight, Utensils } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import Link from 'next/link';
 
 interface CulturalDish {
   id: string;
@@ -108,13 +109,20 @@ export function FoodSection() {
                 languages, and traditions. Through food, we experience the beauty of 
                 culture, nostalgia, joy, and love.
               </p>
-              <div className="flex flex-wrap gap-6">
-                <button className="px-8 py-4 bg-secondary-500 text-white rounded-full font-medium hover:bg-secondary-600 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl">
+              {/* CTA Buttons */}
+              <div className="flex flex-col sm:flex-row gap-4 justify-center mt-8">
+                <Link
+                  href="/food/journey"
+                  className="px-8 py-3 bg-[#05342b] text-white rounded-lg font-medium hover:bg-[#05342b]/90 transition-all duration-300 text-center"
+                >
                   Start Your Culinary Journey 🍽️
-                </button>
-                <button className="px-8 py-4 border-2 border-secondary-500 text-secondary-600 rounded-full font-medium hover:bg-secondary-50 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl">
+                </Link>
+                <Link
+                  href="/food/explore"
+                  className="px-8 py-3 bg-white text-[#05342b] border-2 border-[#05342b] rounded-lg font-medium hover:bg-gray-50 transition-all duration-300 text-center"
+                >
                   Explore Global Flavors 🌎
-                </button>
+                </Link>
               </div>
             </div>
             <div className="relative h-[500px]">
