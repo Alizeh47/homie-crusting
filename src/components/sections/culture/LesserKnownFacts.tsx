@@ -3,6 +3,7 @@
 import React from 'react';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
+import Link from 'next/link';
 
 const facts = [
   {
@@ -63,10 +64,13 @@ export default function LesserKnownFacts() {
                 <p className="text-gray-600 leading-relaxed">
                   {fact.description}
                 </p>
-                <button className="text-black font-semibold hover:underline group flex items-center">
+                <Link 
+                  href={`/culture/facts/lesser-known/${fact.number}`}
+                  className="text-black font-semibold hover:underline group flex items-center"
+                >
                   Learn more about this tradition 
                   <span className="ml-2 transform transition-transform group-hover:translate-x-1">→</span>
-                </button>
+                </Link>
               </div>
               <div className="relative h-[400px] rounded-lg overflow-hidden shadow-xl">
                 <Image

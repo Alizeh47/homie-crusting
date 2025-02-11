@@ -3,15 +3,55 @@
 import { motion } from 'framer-motion';
 import Link from 'next/link';
 import { ArrowRight } from 'lucide-react';
+import { useRouter } from 'next/navigation';
+import { useToast } from '@/components/ui/use-toast';
 
 const quickLinks = [
-  { name: 'Explore Cuisines', href: '#explore' },
-  { name: 'Share Your Story', href: '#share' },
-  { name: 'Vote in Our Poll', href: '#vote' },
-  { name: 'Featured Recipes', href: '#recipes' },
+  { 
+    name: 'Explore Cuisines', 
+    href: '/food/explore',
+    description: 'Discover diverse culinary traditions from around the world'
+  },
+  { 
+    name: 'Share Your Story', 
+    href: '/food/share',
+    description: 'Tell us about your memorable food experiences'
+  },
+  { 
+    name: 'Vote in Our Poll', 
+    href: '/food/poll',
+    description: 'Participate in our weekly food culture surveys'
+  },
+  { 
+    name: 'Featured Recipes', 
+    href: '/food/recipes',
+    description: 'Learn to cook authentic dishes from different cultures'
+  },
 ];
 
 export function ConnectWithUs() {
+  const router = useRouter();
+  const { toast } = useToast();
+
+  const handleJoinCommunity = () => {
+    // Show loading toast
+    toast({
+      title: 'Joining Community...',
+      description: 'Please wait while we process your request.',
+    });
+
+    // Simulate API call with setTimeout
+    setTimeout(() => {
+      // Show success toast
+      toast({
+        title: '🎉 Welcome to Our Community!',
+        description: 'You have successfully joined our food enthusiasts community.',
+      });
+      // Redirect to community page
+      router.push('/community');
+    }, 1500);
+  };
+
   return (
     <section className="relative py-24 overflow-hidden rounded-[3rem] mx-8 sm:mx-12 lg:mx-16">
       {/* Background with gradient overlay */}
@@ -49,7 +89,7 @@ export function ConnectWithUs() {
               className="bg-white/10 backdrop-blur-lg rounded-[2rem] p-8 text-white"
             >
               <h3 className="text-2xl font-bold mb-6">Quick Links</h3>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 gap-4">
                 {quickLinks.map((link, index) => (
                   <motion.div
                     key={link.name}
@@ -60,10 +100,19 @@ export function ConnectWithUs() {
                   >
                     <Link 
                       href={link.href}
-                      className="group flex items-center gap-2 text-white/80 hover:text-white transition-colors rounded-full hover:bg-white/5 px-6 py-3"
+                      className="group block bg-white/5 hover:bg-white/10 rounded-xl p-4 transition-all duration-300"
                     >
-                      <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
-                      <span>{link.name}</span>
+                      <div className="flex items-center justify-between">
+                        <div>
+                          <h4 className="text-lg font-semibold text-white group-hover:text-[#F782B4] transition-colors">
+                            {link.name}
+                          </h4>
+                          <p className="text-sm text-white/70 mt-1">
+                            {link.description}
+                          </p>
+                        </div>
+                        <ArrowRight className="w-5 h-5 text-white/70 group-hover:text-[#F782B4] transition-all transform group-hover:translate-x-1" />
+                      </div>
                     </Link>
                   </motion.div>
                 ))}
@@ -79,12 +128,15 @@ export function ConnectWithUs() {
             >
               <h3 className="text-2xl font-bold text-white mb-4">Connect With Us</h3>
               <p className="text-white/80 mb-6">
-                Follow us for daily food inspiration and cultural stories.
+                Join our community of food enthusiasts and share your culinary adventures.
               </p>
               <motion.button
+                onClick={handleJoinCommunity}
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                className="px-10 py-4 bg-white text-[#F782B4] rounded-full font-semibold hover:bg-white/90 transition-colors shadow-lg"
+                className="px-10 py-4 bg-white text-[#F782B4] rounded-full font-semibold 
+                         hover:bg-white/90 transition-colors shadow-lg 
+                         focus:outline-none focus:ring-2 focus:ring-white/50"
               >
                 Join Our Community
               </motion.button>

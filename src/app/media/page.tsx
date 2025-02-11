@@ -7,30 +7,42 @@ import PopularMedia from '@/components/sections/media/PopularMedia';
 import UserInteraction from '@/components/sections/media/UserInteraction';
 import CallToAction from '@/components/sections/media/CallToAction';
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 
-const BookTokCard = ({ title, image, description }: { title: string; image: string; description: string }) => (
-  <div className="relative group">
-    <div className="absolute inset-0 bg-gradient-to-r from-purple-100 to-pink-100 rounded-[3rem] transform group-hover:scale-105 transition-all duration-500" />
-    <div className="relative bg-white backdrop-blur-lg rounded-[3rem] overflow-hidden border border-gray-100 transform transition-all duration-500 group-hover:scale-105 group-hover:shadow-2xl">
-      <div className="aspect-[4/5] relative rounded-b-[8rem]">
-        <Image
-          src={image}
-          alt={title}
-          fill
-          className="object-cover transform transition-transform duration-700 group-hover:scale-110"
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-white via-white/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-      </div>
-      <div className="p-8 relative z-10">
-        <h3 className="text-2xl font-bold text-gray-800 mb-2">{title}</h3>
-        <p className="text-gray-600">{description}</p>
-        <button className="mt-4 px-8 py-3 bg-purple-50 hover:bg-purple-100 border border-purple-200 rounded-full text-purple-700 backdrop-blur-sm transition-all duration-300 transform hover:scale-105">
-          Explore More
-        </button>
+const BookTokCard = ({ title, image, description, slug }: { title: string; image: string; description: string; slug: string }) => {
+  const router = useRouter();
+
+  const handleExploreMore = () => {
+    router.push(`/media/books/${slug}`);
+  };
+
+  return (
+    <div className="relative group">
+      <div className="absolute inset-0 bg-gradient-to-r from-purple-100 to-pink-100 rounded-[3rem] transform group-hover:scale-105 transition-all duration-500" />
+      <div className="relative bg-white backdrop-blur-lg rounded-[3rem] overflow-hidden border border-gray-100 transform transition-all duration-500 group-hover:scale-105 group-hover:shadow-2xl">
+        <div className="aspect-[4/5] relative rounded-b-[8rem]">
+          <Image
+            src={image}
+            alt={title}
+            fill
+            className="object-cover transform transition-transform duration-700 group-hover:scale-110"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-white via-white/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+        </div>
+        <div className="p-8 relative z-10">
+          <h3 className="text-2xl font-bold text-gray-800 mb-2">{title}</h3>
+          <p className="text-gray-600">{description}</p>
+          <button 
+            onClick={handleExploreMore}
+            className="mt-4 px-8 py-3 bg-purple-50 hover:bg-purple-100 border border-purple-200 rounded-full text-purple-700 backdrop-blur-sm transition-all duration-300 transform hover:scale-105"
+          >
+            Explore More
+          </button>
+        </div>
       </div>
     </div>
-  </div>
-);
+  );
+};
 
 export default function MediaPage() {
   return (
@@ -63,16 +75,19 @@ export default function MediaPage() {
               title="The Midnight Library"
               image="/images/media/book1.jpg"
               description="Between life and death there is a library. Would you make a different choice?"
+              slug="midnight-library"
             />
             <BookTokCard
               title="A Court of Thorns and Roses"
               image="/images/media/book2.jpg"
               description="Enter a world of magic, romance, and dangerous bargains."
+              slug="court-thorns-roses"
             />
             <BookTokCard
               title="The Seven Husbands"
-              image="/images/media/book3.jpg"
+              image="/images/media/books3.jpg"
               description="The epic journey of a legendary Hollywood actress."
+              slug="seven-husbands"
             />
           </div>
         </div>

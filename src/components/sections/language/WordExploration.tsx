@@ -84,6 +84,11 @@ const WordCard = ({ word, index }: WordCardProps) => {
   const [isFlipped, setIsFlipped] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
 
+  const handleFlip = (e: React.MouseEvent) => {
+    e.preventDefault();
+    setIsFlipped(!isFlipped);
+  };
+
   const cardVariants = {
     hidden: { 
       opacity: 0,
@@ -142,10 +147,12 @@ const WordCard = ({ word, index }: WordCardProps) => {
       >
         {/* Front of card */}
         <div
-          className={`absolute inset-0 p-6 rounded-xl ${
-            isFlipped ? 'opacity-0' : 'opacity-100'
+          className={`absolute inset-0 p-6 rounded-xl cursor-pointer ${
+            isFlipped ? 'opacity-0 pointer-events-none' : 'opacity-100'
           } transition-opacity duration-300`}
-          onClick={() => setIsFlipped(true)}
+          onClick={handleFlip}
+          role="button"
+          aria-label="Click to see usage example"
         >
           <motion.div 
             className="flex justify-between items-start"
@@ -190,7 +197,11 @@ const WordCard = ({ word, index }: WordCardProps) => {
             animate={{ opacity: 1 }}
             transition={{ delay: 0.5 }}
           >
-            <p className="text-sm text-purple-600 flex items-center justify-center gap-2">
+            <button
+              onClick={handleFlip}
+              className="w-full text-sm text-purple-600 hover:text-purple-700 flex items-center justify-center gap-2 transition-colors"
+              aria-label="Show usage example"
+            >
               Click to see usage example
               <motion.span
                 animate={{ x: [0, 5, 0] }}
@@ -198,15 +209,17 @@ const WordCard = ({ word, index }: WordCardProps) => {
               >
                 →
               </motion.span>
-            </p>
+            </button>
           </motion.div>
         </div>
 
         {/* Back of card */}
         <div
-          className={`absolute inset-0 p-6 bg-gradient-to-br from-purple-500 to-blue-600 text-white rounded-xl
-                     ${isFlipped ? 'opacity-100 rotate-y-180' : 'opacity-0'}`}
-          onClick={() => setIsFlipped(false)}
+          className={`absolute inset-0 p-6 bg-gradient-to-br from-purple-500 to-blue-600 text-white rounded-xl cursor-pointer
+                     ${isFlipped ? 'opacity-100 rotate-y-180' : 'opacity-0 pointer-events-none'}`}
+          onClick={handleFlip}
+          role="button"
+          aria-label="Click to flip back"
         >
           <motion.div
             initial={{ opacity: 0 }}
@@ -220,7 +233,11 @@ const WordCard = ({ word, index }: WordCardProps) => {
               Pronunciation: {word.pronunciation}
             </p>
             <div className="absolute bottom-6 left-6 right-6">
-              <p className="text-sm text-white/80 flex items-center justify-center gap-2">
+              <button
+                onClick={handleFlip}
+                className="w-full text-sm text-white/80 hover:text-white flex items-center justify-center gap-2 transition-colors"
+                aria-label="Flip card back"
+              >
                 <motion.span
                   animate={{ x: [0, -5, 0] }}
                   transition={{ duration: 1, repeat: Infinity }}
@@ -228,7 +245,7 @@ const WordCard = ({ word, index }: WordCardProps) => {
                   ←
                 </motion.span>
                 Click to flip back
-              </p>
+              </button>
             </div>
           </motion.div>
         </div>

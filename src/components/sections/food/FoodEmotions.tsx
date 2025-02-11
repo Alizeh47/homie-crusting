@@ -4,6 +4,7 @@ import { useState } from 'react';
 import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Heart, Smile, Coffee, Star } from 'lucide-react';
+import { useRouter } from 'next/navigation';
 
 interface EmotionalDish {
   id: string;
@@ -14,6 +15,7 @@ interface EmotionalDish {
     origin: string;
     description: string;
     image: string;
+    slug: string;
   }[];
 }
 
@@ -28,12 +30,14 @@ const emotionalDishes: EmotionalDish[] = [
         origin: 'Japan',
         description: 'A warm bowl of comfort that soothes the soul on cold days.',
         image: '/images/food/ramen.jpg',
+        slug: 'japanese-ramen'
       },
       {
         name: 'Italian Pasta',
         origin: 'Italy',
         description: 'Simple yet satisfying, reminiscent of family gatherings.',
         image: '/images/food/carbonara.jpg',
+        slug: 'italian-pasta'
       },
     ],
   },
@@ -47,12 +51,14 @@ const emotionalDishes: EmotionalDish[] = [
         origin: 'France',
         description: 'Colorful bites of happiness that brighten any occasion.',
         image: '/images/food/macarons.jpg',
+        slug: 'french-macarons'
       },
       {
         name: 'Indian Sweets',
         origin: 'India',
         description: 'Traditional delicacies that mark festive celebrations.',
         image: '/images/food/gulab-jamun.jpg',
+        slug: 'indian-sweets'
       },
     ],
   },
@@ -66,12 +72,14 @@ const emotionalDishes: EmotionalDish[] = [
         origin: 'Belgium',
         description: 'Rich and indulgent, perfect for romantic moments.',
         image: '/images/food/chocolate.jpg',
+        slug: 'dark-chocolate'
       },
       {
         name: 'Strawberry Dessert',
         origin: 'Global',
         description: "Nature's sweet gift, symbolizing love and passion.",
         image: '/images/food/strawberry-dessert.jpg',
+        slug: 'strawberry-dessert'
       },
     ],
   },
@@ -79,6 +87,11 @@ const emotionalDishes: EmotionalDish[] = [
 
 export function FoodEmotions() {
   const [selectedEmotion, setSelectedEmotion] = useState<string>(emotionalDishes[0].id);
+  const router = useRouter();
+
+  const handleDishClick = (slug: string) => {
+    router.push(`/food/dishes/${slug}`);
+  };
 
   return (
     <section className="py-24 bg-gradient-to-b from-orange-50 to-white">
@@ -144,7 +157,10 @@ export function FoodEmotions() {
                       initial={{ opacity: 0, y: 20 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ delay: index * 0.1 }}
-                      className="bg-white rounded-xl shadow-lg overflow-hidden"
+                      className="bg-white rounded-xl shadow-lg overflow-hidden cursor-pointer"
+                      onClick={() => handleDishClick(dish.slug)}
+                      whileHover={{ scale: 1.02 }}
+                      whileTap={{ scale: 0.98 }}
                     >
                       <div className="relative h-48">
                         <Image

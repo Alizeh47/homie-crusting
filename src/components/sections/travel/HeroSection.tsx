@@ -3,6 +3,7 @@
 import React from 'react';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
+import Link from 'next/link';
 
 export default function HeroSection() {
   return (
@@ -26,7 +27,7 @@ export default function HeroSection() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
-          className="mb-6 text-center font-serif text-4xl font-bold leading-tight text-[#05081c] md:text-6xl lg:text-7xl"
+          className="mb-6 text-center font-serif text-2xl sm:text-3xl md:text-6xl lg:text-7xl font-bold leading-tight text-[#05081c]"
         >
           Cultural Exchange of Emotions and Feelings:
           <span className="block">A Universal Connection</span>
@@ -36,7 +37,7 @@ export default function HeroSection() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2 }}
-          className="mb-8 max-w-3xl text-center text-xl font-medium leading-relaxed text-white md:text-2xl lg:text-3xl"
+          className="mb-8 max-w-3xl text-center text-lg sm:text-xl md:text-2xl lg:text-3xl font-medium leading-relaxed text-white"
         >
           Journey through destinations that stir the soul, where joy, wonder, and serenity await at every turn. Experience the emotional tapestry of diverse cultures, creating connections that transcend language and borders.
         </motion.p>
@@ -45,14 +46,18 @@ export default function HeroSection() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.4 }}
-          className="flex gap-4"
+          className="flex flex-col sm:flex-row gap-4"
         >
-          <button className="rounded-full bg-[#05081c] px-8 py-3 text-lg font-semibold text-white transition-all hover:bg-opacity-90">
-            Discover More
-          </button>
-          <button className="rounded-full border-2 border-[#05081c] bg-transparent px-8 py-3 text-lg font-semibold text-[#05081c] transition-all hover:bg-[#05081c] hover:text-white">
-            Start Your Journey
-          </button>
+          <Link href="/discover">
+            <button className="rounded-full bg-[#05081c] px-6 sm:px-8 py-2.5 sm:py-3 text-base sm:text-lg font-semibold text-white transition-all hover:bg-opacity-90">
+              Discover More
+            </button>
+          </Link>
+          <Link href="/journey">
+            <button className="rounded-full border-2 border-[#05081c] bg-transparent px-6 sm:px-8 py-2.5 sm:py-3 text-base sm:text-lg font-semibold text-[#05081c] transition-all hover:bg-[#05081c] hover:text-white">
+              Start Your Journey
+            </button>
+          </Link>
         </motion.div>
       </div>
     </section>

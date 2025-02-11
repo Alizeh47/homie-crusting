@@ -25,7 +25,7 @@ export function HeroSection() {
         
         {/* Main Content Container */}
         <div className="max-w-screen-xl mx-auto px-4 sm:px-6 relative z-10 h-screen">
-          <div className="flex flex-col justify-start md:justify-start h-full pt-[5vh] md:pt-32">
+          <div className="flex flex-col justify-start md:justify-start h-full pt-[3vh] md:pt-18">
             <div className="max-w-4xl text-left transform animate-fade-in">
               {/* Heading */}
               <div className="mb-4 md:mb-8 animate-slide-up">

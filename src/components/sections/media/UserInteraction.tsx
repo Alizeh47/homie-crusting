@@ -41,9 +41,28 @@ export default function UserInteraction() {
         </div>
 
         {/* Form and Illustration Container */}
-        <div className="flex flex-col lg:flex-row gap-12 mb-20">
-          {/* Submission Form - Left Side */}
-          <div className="lg:w-1/2">
+        <div className="flex flex-col-reverse lg:flex-row gap-12 mb-20">
+          {/* Mobile-only Illustration */}
+          <div className="block lg:hidden w-full relative min-h-[300px] flex items-center justify-center">
+            <div className="relative w-full h-[200%]">
+              <Image
+                src="/images/media/batikkk.png"
+                alt="Share your cultural story"
+                fill
+                className="object-contain scale-90"
+                priority
+              />
+            </div>
+            {/* Mobile-only Decorative elements */}
+            <div className="absolute inset-0 pointer-events-none scale-100">
+              <div className="absolute top-1/4 right-1/4 w-20 h-20 bg-purple-100 rounded-full opacity-50" />
+              <div className="absolute bottom-1/3 left-1/3 w-32 h-32 bg-pink-100 rounded-full opacity-50" />
+              <div className="absolute top-1/2 right-1/3 w-16 h-16 bg-yellow-100 rounded-full opacity-50" />
+            </div>
+          </div>
+
+          {/* Submission Form */}
+          <div className="w-full lg:w-1/2">
             <div className="bg-gray-50 rounded-2xl p-8 shadow-lg">
               <h3 className="text-2xl font-bold mb-6">Share Your Story</h3>
               <form className="space-y-6">
@@ -108,22 +127,22 @@ export default function UserInteraction() {
             </div>
           </div>
 
-          {/* Illustration - Right Side */}
-          <div className="lg:w-1/2 relative min-h-[600px] flex items-center justify-center -mt-20">
-            <div className="relative w-[300%] h-[300%] -mr-[10%] -mt-[20%]">
+          {/* Desktop-only Illustration */}
+          <div className="hidden lg:flex lg:w-1/2 relative lg:min-h-[100px] items-center justify-center lg:-mt-20">
+            <div className="relative lg:w-[200%] h-[200%] lg:-mr-[10%] lg:-mt-[20%]">
               <Image
-                src="/images/media/batik.png"
+                src="/images/media/batikkk.png"
                 alt="Share your cultural story"
                 fill
-                className="object-contain scale-200"
+                className="object-contain lg:scale-100"
                 priority
               />
             </div>
-            {/* Decorative elements */}
-            <div className="absolute inset-0 pointer-events-none scale-150">
-              <div className="absolute top-1/4 right-1/4 w-28 h-28 bg-purple-100 rounded-full opacity-50" />
-              <div className="absolute bottom-1/3 left-1/3 w-44 h-44 bg-pink-100 rounded-full opacity-50" />
-              <div className="absolute top-1/2 right-1/3 w-24 h-24 bg-yellow-100 rounded-full opacity-50" />
+            {/* Desktop-only Decorative elements */}
+            <div className="absolute inset-0 pointer-events-none lg:scale-150">
+              <div className="absolute top-1/4 right-1/4 lg:w-28 lg:h-28 bg-purple-100 rounded-full opacity-50" />
+              <div className="absolute bottom-1/3 left-1/3 lg:w-44 lg:h-44 bg-pink-100 rounded-full opacity-50" />
+              <div className="absolute top-1/2 right-1/3 lg:w-24 lg:h-24 bg-yellow-100 rounded-full opacity-50" />
             </div>
           </div>
         </div>

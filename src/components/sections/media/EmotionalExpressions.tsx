@@ -2,33 +2,39 @@
 
 import React from 'react';
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 
 const emotions = [
   {
+    id: 'nostalgia-japan',
     title: 'Nostalgia in Japan',
     image: '/images/media/nostalgia-japan.jpg',
     description: 'The concept of "natsukashii" - a yearning for the past that brings both joy and gentle sadness.',
     color: 'from-blue-500/20 to-indigo-500/20'
   },
   {
+    id: 'joy-brazil',
     title: 'Joy in Brazil',
     image: '/images/media/joy-brazil.jpg',
     description: 'The vibrant celebration of "alegria" through carnival, dance, and communal festivities.',
     color: 'from-yellow-500/20 to-orange-500/20'
   },
   {
+    id: 'serenity-tibet',
     title: 'Serenity in Tibet',
     image: '/images/media/serenity-tibet.jpg',
     description: 'The practice of finding inner peace through meditation and mindful living.',
     color: 'from-green-500/20 to-teal-500/20'
   },
   {
+    id: 'love-italy',
     title: 'Love in Italy',
     image: '/images/media/love-italy.jpg',
     description: 'The passionate expression of "amore" through art, poetry, and romantic gestures.',
     color: 'from-red-500/20 to-pink-500/20'
   },
   {
+    id: 'harmony-korea',
     title: 'Harmony in Korea',
     image: '/images/media/harmony-korea.jpg',
     description: 'The art of finding balance in modern cultural expression.',
@@ -39,6 +45,12 @@ const emotions = [
 ];
 
 export default function EmotionalExpressions() {
+  const router = useRouter();
+
+  const handleLearnMore = (emotionId: string) => {
+    router.push(`/media/emotions/${emotionId}`);
+  };
+
   return (
     <section className="py-20 px-6">
       <div className="container mx-auto">
@@ -85,10 +97,13 @@ export default function EmotionalExpressions() {
                   group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300">
                   {emotion.description}
                 </p>
-                <button className="mt-4 px-4 py-2 bg-white/10 backdrop-blur-sm rounded-full 
-                  text-white border border-white/20 opacity-0 transform translate-y-4 
-                  group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300 
-                  hover:bg-white/20">
+                <button 
+                  onClick={() => handleLearnMore(emotion.id)}
+                  className="mt-4 px-4 py-2 bg-white/10 backdrop-blur-sm rounded-full 
+                    text-white border border-white/20 opacity-0 transform translate-y-4 
+                    group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300 
+                    hover:bg-white/20"
+                >
                   Learn More
                 </button>
               </div>

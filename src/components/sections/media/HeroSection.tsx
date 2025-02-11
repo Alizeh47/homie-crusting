@@ -2,9 +2,11 @@
 
 import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 
 export default function HeroSection() {
   const [scrollY, setScrollY] = useState(0);
+  const router = useRouter();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -42,22 +44,25 @@ export default function HeroSection() {
       {/* Content */}
       <div className="relative z-10 container mx-auto px-6 h-full flex flex-col justify-center items-center text-center">
         <div className="max-w-4xl">
-          <h1 className="font-serif text-6xl font-bold mb-6 opacity-9 animate-fade-in">
+          <h1 className="font-serif text-4xl md:text-6xl font-bold mb-6 opacity-9 animate-fade-in">
             <span className="bg-gradient-to-r from-indigo-300 via-purple-400 to-pink-500 bg-clip-text text-transparent">
               Digital Voices & Cultural Stories
             </span>
-            <span className="block mt-4 text-5xl bg-gradient-to-r from-purple-400 to-pink-600 bg-clip-text text-transparent">
+            <span className="block mt-4 text-3xl md:text-5xl bg-gradient-to-r from-purple-400 to-pink-600 bg-clip-text text-transparent">
               Where Media Meets Emotion
             </span>
           </h1>
           
-          <p className="text-xl text-white/90 font-light mb-8 opacity-9 animate-fade-in-delay max-w-3xl mx-auto">
+          <p className="text-base md:text-xl text-white/90 font-light mb-8 opacity-9 animate-fade-in-delay max-w-3xl mx-auto">
             Experience how modern influencers and digital media shape our cultural narratives, 
             connecting hearts and minds across borders through powerful storytelling and authentic expression.
           </p>
 
           <div className="flex justify-center">
-            <button className="px-8 py-4 rounded-full bg-gradient-to-r from-purple-600 to-pink-600 text-white font-medium transform hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-purple-500/25">
+            <button 
+              onClick={() => router.push('/media/explore')}
+              className="px-6 md:px-8 py-3 md:py-4 text-sm md:text-base rounded-full bg-gradient-to-r from-purple-600 to-pink-600 text-white font-medium transform hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-purple-500/25"
+            >
               Explore Media & Influencers
             </button>
           </div>

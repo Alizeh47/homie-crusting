@@ -3,6 +3,7 @@
 import React from 'react';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
+import Link from 'next/link';
 
 const stories = [
   {
@@ -13,6 +14,7 @@ const stories = [
     image: '/images/stories/dance.jpg',
     content:
       'Witnessing the ancient masked dances during the Paro Tsechu festival reveals the deep spiritual connection between Bhutanese people and their centuries-old traditions. Each movement tells a story of devotion and cultural preservation.',
+    link: '/stories/sacred-dance-paro'
   },
   {
     id: 2,
@@ -22,6 +24,7 @@ const stories = [
     image: '/images/stories/tea.jpg',
     content:
       'In the heart of Kyoto, a tea master shared not just the art of tea preparation, but the philosophy of finding beauty in simplicity and peace in the present moment. The ceremony transcended language barriers.',
+    link: '/stories/tea-ceremony-wisdom'
   },
   {
     id: 3,
@@ -31,6 +34,7 @@ const stories = [
     image: '/images/stories/mountains.jpg',
     content:
       'High in the Himalayas, local monks demonstrate how their traditional throat singing connects the physical world with the spiritual realm. The ancient practice echoes through valleys, carrying centuries of wisdom.',
+    link: '/stories/voices-of-mountains'
   },
 ];
 
@@ -73,24 +77,24 @@ export default function CulturalStories() {
               </div>
 
               {/* Content */}
-              <div className="flex flex-1 flex-col justify-center">
-                <div
-                  className={`space-y-4 ${
-                    index % 2 === 1 ? 'md:pr-12 lg:pr-24' : 'md:pl-12 lg:pl-24'
-                  }`}
-                >
-                  <div className="space-y-1">
-                    <p className="text-sm font-semibold uppercase tracking-wider text-blue-600">
-                      {story.location}
-                    </p>
-                    <p className="text-sm text-gray-500">{story.date}</p>
-                  </div>
-                  <h3 className="font-serif text-3xl font-bold text-gray-900">{story.title}</h3>
-                  <p className="text-lg leading-relaxed text-gray-600">{story.content}</p>
-                  <button className="inline-flex items-center text-blue-600 hover:text-blue-700">
+              <div
+                className={`flex-1 space-y-4 ${
+                  index % 2 === 1 ? 'md:pr-12 lg:pr-24' : 'md:pl-12 lg:pl-24'
+                }`}
+              >
+                <div className="space-y-1">
+                  <p className="text-sm font-semibold uppercase tracking-wider text-blue-600">
+                    {story.location}
+                  </p>
+                  <p className="text-sm text-gray-500">{story.date}</p>
+                </div>
+                <h3 className="font-serif text-3xl font-bold text-gray-900">{story.title}</h3>
+                <p className="text-lg leading-relaxed text-gray-600">{story.content}</p>
+                <Link href={story.link}>
+                  <button className="group inline-flex items-center text-blue-600 hover:text-blue-700">
                     Read full story
                     <svg
-                      className="ml-2 h-4 w-4"
+                      className="ml-2 h-4 w-4 transform transition-transform group-hover:translate-x-1"
                       fill="none"
                       stroke="currentColor"
                       viewBox="0 0 24 24"
@@ -103,7 +107,7 @@ export default function CulturalStories() {
                       />
                     </svg>
                   </button>
-                </div>
+                </Link>
               </div>
             </motion.div>
           ))}

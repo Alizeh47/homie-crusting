@@ -3,9 +3,11 @@
 import { motion, AnimatePresence } from 'framer-motion';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
 
 const HeroSection = () => {
   const [isMounted, setIsMounted] = useState(false);
+  const router = useRouter();
 
   useEffect(() => {
     setIsMounted(true);
@@ -61,7 +63,7 @@ const HeroSection = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
-          className="text-5xl md:text-6xl font-bold text-white mb-6"
+          className="text-3xl md:text-6xl font-bold text-white mb-6"
         >
           Cultural Exchange of Emotions and Feelings:
           <span className="block mt-2">A Universal Connection</span>
@@ -71,7 +73,7 @@ const HeroSection = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2 }}
-          className="text-xl md:text-2xl text-gray-200 max-w-3xl mx-auto mb-8 italic tracking-wide"
+          className="text-sm md:text-2xl text-gray-200 max-w-3xl mx-auto mb-8 italic tracking-wide"
         >
           Emotions transcend borders, but the way we express them is deeply rooted in culture.
           Discover unique words and phrases that capture emotions like never before.
@@ -83,6 +85,7 @@ const HeroSection = () => {
           transition={{ duration: 0.8, delay: 0.4 }}
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
+          onClick={() => router.push('/language/expressions')}
           className="px-8 py-4 bg-gradient-to-r from-blue-500 to-purple-500 text-white rounded-full
                      text-lg font-semibold shadow-lg hover:shadow-xl transition-all duration-300"
         >

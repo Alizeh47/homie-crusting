@@ -2,6 +2,7 @@
 
 import React, { useRef, useState } from 'react';
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 
 type MediaItem = {
   title: string;
@@ -13,6 +14,7 @@ type MediaItem = {
   host?: string;
   author?: string;
   artist?: string;
+  slug?: string;
 };
 
 type CategoryType = 'movies' | 'documentaries' | 'podcasts' | 'books' | 'digitalArt';
@@ -27,7 +29,8 @@ const mediaCategories: Record<string, MediaItem[]> = {
       synopsis: [
         'A gripping tale of two families intertwined by fate',
         'Where wealth meets poverty in modern Seoul'
-      ]
+      ],
+      slug: 'parasite'
     },
     {
       title: 'Life is Beautiful',
@@ -185,6 +188,12 @@ const CategoryIcon = ({
 export default function PopularMedia() {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
+  const router = useRouter();
+
+  const handleExploreMore = (category: string, item: MediaItem) => {
+    const slug = item.slug || item.title.toLowerCase().replace(/\s+/g, '-');
+    router.push(`/media/${category}/${slug}`);
+  };
 
   return (
     <section className="py-20 bg-gray-50">
@@ -262,7 +271,10 @@ export default function PopularMedia() {
                       {item.country || item.creator || item.host || item.author || item.artist}
                     </p>
                     <p className="text-gray-700">{item.impact}</p>
-                    <button className="mt-4 text-purple-600 font-medium hover:text-purple-700 transition-colors">
+                    <button 
+                      onClick={() => handleExploreMore(selectedCategory, item)}
+                      className="mt-4 text-purple-600 font-medium hover:text-purple-700 transition-colors"
+                    >
                       Explore More →
                     </button>
                   </div>

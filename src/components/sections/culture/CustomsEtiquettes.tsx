@@ -3,6 +3,7 @@
 import React from 'react';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
+import Link from 'next/link';
 
 const customs = [
   {
@@ -78,13 +79,13 @@ export default function CustomsEtiquettes() {
                 <p className="text-gray-700 leading-relaxed mb-6">
                   {custom.description}
                 </p>
-                <motion.button
-                  whileHover={{ x: 10 }}
+                <Link
+                  href={`/culture/etiquettes#${custom.title.toLowerCase().replace(/\s+/g, '-')}`}
                   className="inline-flex items-center text-gray-800 font-semibold group"
                 >
                   Learn More
                   <span className="ml-2 transform transition-transform group-hover:translate-x-1">→</span>
-                </motion.button>
+                </Link>
               </div>
 
               <motion.div
@@ -108,10 +109,13 @@ export default function CustomsEtiquettes() {
           viewport={{ once: true }}
           className="text-center mt-16"
         >
-          <button className="bg-white/10 hover:bg-white/20 text-white px-8 py-3 rounded-full backdrop-blur-sm transition-all duration-300 group">
+          <Link
+            href="/culture/etiquettes"
+            className="bg-white/10 hover:bg-white/20 text-white px-8 py-3 rounded-full backdrop-blur-sm transition-all duration-300 group inline-flex items-center"
+          >
             Explore More Cultural Etiquettes
             <span className="ml-2 inline-block transform transition-transform group-hover:translate-x-1">→</span>
-          </button>
+          </Link>
         </motion.div>
       </div>
     </section>

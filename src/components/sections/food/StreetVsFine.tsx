@@ -4,6 +4,7 @@ import { useState } from 'react';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { ArrowRight } from 'lucide-react';
+import { useRouter } from 'next/navigation';
 
 interface DiningCategory {
   id: string;
@@ -44,6 +45,11 @@ const categories: DiningCategory[] = [
 
 export function StreetVsFine() {
   const [hoveredCategory, setHoveredCategory] = useState<string | null>(null);
+  const router = useRouter();
+
+  const handleExplore = (category: string) => {
+    router.push(`/food/${category.toLowerCase().replace(' ', '-')}`);
+  };
 
   return (
     <section className="py-24 bg-gray-50">
@@ -55,10 +61,10 @@ export function StreetVsFine() {
           viewport={{ once: true }}
           className="text-center mb-16"
         >
-          <h2 className="text-4xl font-serif font-bold text-gray-900 mb-6">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-serif font-bold text-gray-900 mb-4 md:mb-6">
             Street Food vs. Fine Dining: A Cultural Perspective
           </h2>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+          <p className="text-base sm:text-lg md:text-xl text-gray-600 max-w-3xl mx-auto">
             Discover how different dining experiences shape our understanding of culture and create unique emotional connections.
           </p>
         </motion.div>
@@ -84,11 +90,11 @@ export function StreetVsFine() {
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-black/20" />
                 
-                <div className="absolute inset-0 p-8 flex flex-col justify-end text-white">
-                  <h3 className="text-3xl font-serif font-bold mb-4">
+                <div className="absolute inset-0 p-4 sm:p-6 md:p-8 flex flex-col justify-end text-white">
+                  <h3 className="text-xl sm:text-2xl md:text-3xl font-serif font-bold mb-2 md:mb-4">
                     {category.title}
                   </h3>
-                  <p className="text-lg mb-6 opacity-90">
+                  <p className="text-sm sm:text-base md:text-lg mb-4 md:mb-6 opacity-90">
                     {category.description}
                   </p>
                   
@@ -99,24 +105,25 @@ export function StreetVsFine() {
                       y: hoveredCategory === category.id ? 0 : 20
                     }}
                     transition={{ duration: 0.3 }}
-                    className="space-y-4"
+                    className="space-y-2 md:space-y-4"
                   >
                     <div>
-                      <h4 className="font-medium text-[#F782B4] mb-2">Affordability</h4>
-                      <p className="text-sm opacity-90">{category.features.affordability}</p>
+                      <h4 className="text-sm md:text-base font-medium text-[#F782B4] mb-1 md:mb-2">Affordability</h4>
+                      <p className="text-xs sm:text-sm opacity-90">{category.features.affordability}</p>
                     </div>
                     <div>
-                      <h4 className="font-medium text-[#F782B4] mb-2">Accessibility</h4>
-                      <p className="text-sm opacity-90">{category.features.accessibility}</p>
+                      <h4 className="text-sm md:text-base font-medium text-[#F782B4] mb-1 md:mb-2">Accessibility</h4>
+                      <p className="text-xs sm:text-sm opacity-90">{category.features.accessibility}</p>
                     </div>
                     <div>
-                      <h4 className="font-medium text-[#F782B4] mb-2">Experience</h4>
-                      <p className="text-sm opacity-90">{category.features.experience}</p>
+                      <h4 className="text-sm md:text-base font-medium text-[#F782B4] mb-1 md:mb-2">Experience</h4>
+                      <p className="text-xs sm:text-sm opacity-90">{category.features.experience}</p>
                     </div>
                     
                     <motion.button
                       whileHover={{ x: 5 }}
-                      className="flex items-center gap-2 text-[#F782B4] font-medium"
+                      onClick={() => handleExplore(category.id === 'street' ? 'street-food' : 'fine-dining')}
+                      className="flex items-center gap-2 text-[#F782B4] text-sm md:text-base font-medium"
                     >
                       Explore {category.id === 'street' ? 'Street Food' : 'Fine Dining'}
                       <ArrowRight className="w-4 h-4" />

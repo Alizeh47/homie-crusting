@@ -3,12 +3,14 @@
 import { useState } from 'react';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
+import { useRouter } from 'next/navigation';
 
 interface IconicDish {
   id: string;
   name: string;
   image: string;
   description: string;
+  slug: string;
 }
 
 const iconicDishes = [
@@ -16,37 +18,43 @@ const iconicDishes = [
     id: '1',
     name: 'Sushi',
     image: '/images/food/sushi.jpg',
-    description: 'A delicate balance of flavors representing the precision and artistry of Japanese cuisine.'
+    description: 'A delicate balance of flavors representing the precision and artistry of Japanese cuisine.',
+    slug: 'sushi'
   },
   {
     id: '2',
     name: 'Paella',
     image: '/images/food/paella.jpg',
-    description: 'A communal dish that brings families together, celebrating Spanish social dining culture.'
+    description: 'A communal dish that brings families together, celebrating Spanish social dining culture.',
+    slug: 'paella'
   },
   {
     id: '3',
     name: 'Dim Sum',
     image: '/images/food/dimsum.jpg',
-    description: 'Small bites that embody the Chinese tradition of tea and conversation.'
+    description: 'Small bites that embody the Chinese tradition of tea and conversation.',
+    slug: 'dim-sum'
   },
   {
     id: '4',
     name: 'Indian Curry',
     image: '/images/food/curry.jpg',
-    description: 'A rich blend of spices that tells the story of India\'s diverse culinary heritage.'
+    description: 'A rich blend of spices that tells the story of India\'s diverse culinary heritage.',
+    slug: 'indian-curry'
   },
   {
     id: '5',
     name: 'Greek Moussaka',
     image: '/images/food/moussaka.jpg',
-    description: 'Layers of flavor that showcase Mediterranean cooking traditions.'
+    description: 'Layers of flavor that showcase Mediterranean cooking traditions.',
+    slug: 'greek-moussaka'
   },
   {
     id: '6',
     name: 'Mexican Tacos',
     image: '/images/food/tacos.jpg',
-    description: 'Street food elevated to an art form, representing Mexico\'s vibrant food culture.'
+    description: 'Street food elevated to an art form, representing Mexico\'s vibrant food culture.',
+    slug: 'mexican-tacos'
   }
 ];
 
@@ -54,6 +62,12 @@ const iconicDishes = [
 const doubledDishes = [...iconicDishes, ...iconicDishes];
 
 export function IconicDishes() {
+  const router = useRouter();
+
+  const handleLearnMore = (slug: string) => {
+    router.push(`/food/iconic-dishes/${slug}`);
+  };
+
   return (
     <section className="bg-gray-100 py-20 overflow-hidden">
       <div className="container mx-auto px-4">
@@ -88,7 +102,10 @@ export function IconicDishes() {
                   <p className="text-sm font-light opacity-0 transition-opacity duration-300 group-hover:opacity-100">
                     {dish.description}
                   </p>
-                  <button className="mt-4 rounded-full border-2 border-white bg-transparent px-6 py-2 text-sm font-semibold opacity-0 transition-all duration-300 hover:bg-white hover:text-gray-900 group-hover:opacity-100">
+                  <button 
+                    onClick={() => handleLearnMore(dish.slug)}
+                    className="mt-4 rounded-full border-2 border-white bg-transparent px-6 py-2 text-sm font-semibold opacity-0 transition-all duration-300 hover:bg-white hover:text-gray-900 group-hover:opacity-100"
+                  >
                     Learn More
                   </button>
                 </div>

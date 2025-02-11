@@ -44,8 +44,8 @@ export function Header() {
     >
       <div className="max-w-7xl mx-auto px-6">
         {/* Desktop Layout - Unchanged */}
-        <div className="hidden md:flex justify-between items-center py-3">
-          <div className="-ml-12 sm:-ml-16">
+        <div className="hidden md:flex justify-between items-center py-2">
+          <div className="-ml-10 sm:-ml-14">
             <Logo variant={isScrolled ? 'dark' : 'light'} />
           </div>
 

@@ -7,8 +7,8 @@ import { FiMail, FiFacebook, FiInstagram, FiTwitter } from 'react-icons/fi';
 
 export function Footer() {
   return (
-    <footer className="bg-gradient-to-b from-white to-[#E3F2FD]/30 pt-12 md:pt-20 pb-6 md:pb-10">
-      <div className="container mx-auto px-4">
+    <footer className="bg-gradient-to-b from-white to-[#E3F2FD]/30 pt-12 md:pt-20 pb-6 md:pb-10 px-14 md:px-0 ml-0 md:ml-16">
+      <div className="container mx-auto md:px-6">
         {/* Newsletter Section */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}

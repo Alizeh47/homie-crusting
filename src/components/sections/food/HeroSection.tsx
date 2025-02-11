@@ -3,8 +3,15 @@
 import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { ArrowRight } from 'lucide-react';
+import { useRouter } from 'next/navigation';
 
 export function FoodHeroSection() {
+  const router = useRouter();
+
+  const handleExplore = () => {
+    router.push('/food/explore');
+  };
+
   return (
     <section className="relative min-h-[90vh] bg-gradient-to-b from-[#f8e3d6] to-[#fdf1eb] overflow-hidden">
       <div className="absolute inset-0 z-0">
@@ -36,6 +43,7 @@ export function FoodHeroSection() {
 
           <div className="flex flex-wrap gap-6">
             <motion.button
+              onClick={handleExplore}
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               className="px-8 py-4 bg-[#001B3A] text-white rounded-full font-medium 

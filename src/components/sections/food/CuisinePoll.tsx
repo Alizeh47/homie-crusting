@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ChefHat, Utensils, Star, Globe } from 'lucide-react';
 import { useToast } from '@/components/ui/use-toast';
@@ -56,26 +56,61 @@ export function CuisinePoll() {
   const [hoveredOption, setHoveredOption] = useState<string | null>(null);
   const { toast } = useToast();
 
+  // Load stored votes on component mount
+  useEffect(() => {
+    try {
+      const storedVotes = localStorage.getItem('cuisine-poll-votes');
+      const storedVote = localStorage.getItem('cuisine-poll-vote');
+      
+      if (storedVotes) {
+        setPollOptions(JSON.parse(storedVotes));
+      }
+      if (storedVote) {
+        setVotedFor(storedVote);
+      }
+    } catch (error) {
+      console.error('Error accessing localStorage:', error);
+    }
+  }, []);
+
   const totalVotes = pollOptions.reduce((sum, option) => sum + option.votes, 0);
 
   const handleVote = (id: string) => {
-    if (votedFor) return;
+    if (votedFor) {
+      toast({
+        title: 'Already Voted',
+        description: 'You have already cast your vote in this poll.',
+        variant: 'destructive',
+      });
+      return;
+    }
 
-    // Update local state only
-    setPollOptions(options =>
-      options.map(option =>
+    try {
+      // Update local state
+      const updatedOptions = pollOptions.map(option =>
         option.id === id
           ? { ...option, votes: option.votes + 1 }
           : option
-      )
-    );
-    setVotedFor(id);
-    localStorage.setItem('cuisine-poll-vote', id);
+      );
+      setPollOptions(updatedOptions);
+      setVotedFor(id);
 
-    toast({
-      title: '🎉 Thank you for voting!',
-      description: 'Your culinary voice has been heard.',
-    });
+      // Store in localStorage
+      localStorage.setItem('cuisine-poll-votes', JSON.stringify(updatedOptions));
+      localStorage.setItem('cuisine-poll-vote', id);
+
+      toast({
+        title: '🎉 Thank you for voting!',
+        description: 'Your culinary voice has been heard.',
+      });
+    } catch (error) {
+      console.error('Error saving vote:', error);
+      toast({
+        title: 'Error Saving Vote',
+        description: 'There was a problem saving your vote. Please try again.',
+        variant: 'destructive',
+      });
+    }
   };
 
   const getVotePercentage = (votes: number) => {

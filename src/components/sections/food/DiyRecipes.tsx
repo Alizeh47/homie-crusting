@@ -4,6 +4,7 @@ import { useState } from 'react';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { Clock, ChefHat, Users } from 'lucide-react';
+import { useRouter } from 'next/navigation';
 
 interface Recipe {
   id: string;
@@ -15,6 +16,7 @@ interface Recipe {
   servings: number;
   keyIngredients: string[];
   culture: string;
+  slug: string;
 }
 
 const recipes: Recipe[] = [
@@ -27,7 +29,8 @@ const recipes: Recipe[] = [
     difficulty: 'Medium',
     servings: 4,
     keyIngredients: ['Rice noodles', 'Tofu', 'Bean sprouts', 'Tamarind paste', 'Palm sugar'],
-    culture: 'Thai'
+    culture: 'Thai',
+    slug: 'traditional-thai-pad-thai'
   },
   {
     id: '2',
@@ -38,7 +41,8 @@ const recipes: Recipe[] = [
     difficulty: 'Medium',
     servings: 6,
     keyIngredients: ['00 flour', 'Eggs', 'Olive oil', 'Salt', 'Semolina'],
-    culture: 'Italian'
+    culture: 'Italian',
+    slug: 'homemade-italian-pasta'
   },
   {
     id: '3',
@@ -49,12 +53,18 @@ const recipes: Recipe[] = [
     difficulty: 'Hard',
     servings: 8,
     keyIngredients: ['Napa cabbage', 'Korean red pepper flakes', 'Garlic', 'Ginger', 'Fish sauce'],
-    culture: 'Korean'
+    culture: 'Korean',
+    slug: 'korean-kimchi'
   }
 ];
 
 export function DiyRecipes() {
   const [selectedRecipe, setSelectedRecipe] = useState<string | null>(null);
+  const router = useRouter();
+
+  const handleViewRecipe = (slug: string) => {
+    router.push(`/food/recipes/${slug}`);
+  };
 
   return (
     <section className="py-24 bg-purple-900 text-white">
@@ -139,6 +149,7 @@ export function DiyRecipes() {
                 </motion.div>
 
                 <motion.button
+                  onClick={() => handleViewRecipe(recipe.slug)}
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                   className="mt-6 w-full py-3 bg-[#001B3A] text-white rounded-lg font-medium hover:bg-[#001B3A]/90 transition-colors"

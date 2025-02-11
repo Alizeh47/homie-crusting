@@ -52,7 +52,7 @@ export function Sidebar() {
       {/* Desktop Sidebar - Unchanged */}
       <aside
         className={cn(
-          'hidden md:block fixed left-0 top-16 h-[calc(100vh-4rem)] bg-white shadow-lg transition-all duration-300 z-40',
+          'hidden md:block fixed left-0 top-9 h-[calc(100vh-3rem)] bg-white shadow-lg transition-all duration-300 z-40',
           isExpanded ? 'w-64' : 'w-20'
         )}
       >

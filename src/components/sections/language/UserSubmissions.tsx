@@ -2,7 +2,7 @@
 
 import { motion, AnimatePresence } from 'framer-motion';
 import { useState } from 'react';
-import { FaHeart, FaRegHeart, FaGlobe, FaChevronLeft, FaChevronRight } from 'react-icons/fa';
+import { FaHeart, FaRegHeart, FaGlobe, FaChevronLeft, FaChevronRight, FaTimes } from 'react-icons/fa';
 
 interface Submission {
   id: number;
@@ -84,6 +84,12 @@ const UserSubmissions = () => {
     submissions.map(s => ({ ...s, isLiked: false }))
   );
   const [currentPage, setCurrentPage] = useState(0);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [newSubmission, setNewSubmission] = useState({
+    word: '',
+    meaning: '',
+    country: ''
+  });
   const cardsPerPage = 3;
   const totalPages = Math.ceil(submissionsList.length / cardsPerPage);
 
@@ -114,6 +120,25 @@ const UserSubmissions = () => {
     currentPage * cardsPerPage,
     (currentPage + 1) * cardsPerPage
   );
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    const submission: Submission = {
+      id: submissionsList.length + 1,
+      word: newSubmission.word,
+      meaning: newSubmission.meaning,
+      country: newSubmission.country,
+      countryCode: 'UN', // Default code
+      username: 'Anonymous', // Could be replaced with actual user data
+      likes: 0,
+      isLiked: false,
+      timestamp: 'Just now'
+    };
+
+    setSubmissionsList(prev => [submission, ...prev]);
+    setNewSubmission({ word: '', meaning: '', country: '' });
+    setIsModalOpen(false);
+  };
 
   return (
     <section className="py-20 bg-gray-50">
@@ -213,11 +238,91 @@ const UserSubmissions = () => {
           viewport={{ once: true }}
           className="text-center mt-12"
         >
-          <button className="px-8 py-4 bg-gradient-to-r from-purple-500 to-blue-500 text-white rounded-full
-                           font-semibold shadow-lg hover:shadow-xl transition-all duration-300">
+          <button 
+            onClick={() => setIsModalOpen(true)}
+            className="px-8 py-4 bg-gradient-to-r from-purple-500 to-blue-500 text-white rounded-full
+                     font-semibold shadow-lg hover:shadow-xl transition-all duration-300">
             Share Your Expression
           </button>
         </motion.div>
+
+        {/* Submission Modal */}
+        <AnimatePresence>
+          {isModalOpen && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4"
+            >
+              <motion.div
+                initial={{ scale: 0.95, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                exit={{ scale: 0.95, opacity: 0 }}
+                className="bg-white rounded-xl p-6 max-w-md w-full"
+              >
+                <div className="flex justify-between items-center mb-6">
+                  <h3 className="text-2xl font-bold">Share Your Expression</h3>
+                  <button
+                    onClick={() => setIsModalOpen(false)}
+                    className="text-gray-500 hover:text-gray-700"
+                  >
+                    <FaTimes />
+                  </button>
+                </div>
+
+                <form onSubmit={handleSubmit} className="space-y-4">
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                      Word or Expression
+                    </label>
+                    <input
+                      type="text"
+                      required
+                      value={newSubmission.word}
+                      onChange={(e) => setNewSubmission(prev => ({ ...prev, word: e.target.value }))}
+                      className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                      Meaning
+                    </label>
+                    <textarea
+                      required
+                      value={newSubmission.meaning}
+                      onChange={(e) => setNewSubmission(prev => ({ ...prev, meaning: e.target.value }))}
+                      className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                      rows={3}
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                      Country of Origin
+                    </label>
+                    <input
+                      type="text"
+                      required
+                      value={newSubmission.country}
+                      onChange={(e) => setNewSubmission(prev => ({ ...prev, country: e.target.value }))}
+                      className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                    />
+                  </div>
+
+                  <button
+                    type="submit"
+                    className="w-full px-6 py-3 bg-gradient-to-r from-purple-500 to-blue-500 text-white rounded-full
+                             font-semibold shadow-lg hover:shadow-xl transition-all duration-300"
+                  >
+                    Submit Expression
+                  </button>
+                </form>
+              </motion.div>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
     </section>
   );
