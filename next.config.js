@@ -31,16 +31,26 @@ const nextConfig = {
       };
     }
 
+    // Optimize module resolution
+    config.resolve.alias = {
+      ...config.resolve.alias,
+      '@': require('path').resolve(__dirname, './src'),
+    };
+
     return config;
   },
   compiler: {
     removeConsole: process.env.NODE_ENV === 'production',
   },
-  // Simplify cache settings
+  // Disable persistent caching in development
   onDemandEntries: {
-    maxInactiveAge: 60 * 60 * 1000,
-    pagesBufferLength: 2,
+    maxInactiveAge: 60 * 1000, // 1 minute
+    pagesBufferLength: 1,
   },
+  // Disable compression in development
+  compress: process.env.NODE_ENV === 'production',
+  poweredByHeader: false,
+  generateEtags: false,
   headers: async () => {
     if (process.env.NODE_ENV !== 'production') {
       return [];

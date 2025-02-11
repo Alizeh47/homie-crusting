@@ -1,7 +1,7 @@
 'use client';
 
 import { createContext, useContext, useEffect, useState } from 'react';
-import { supabase } from '@/lib/supabase/client';
+import { createClient } from '@/lib/supabase/client';
 import type { User } from '@supabase/supabase-js';
 
 interface AuthContextType {
@@ -31,6 +31,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
     const getUser = async () => {
       try {
+        const supabase = createClient();
         const { data: { session }, error } = await supabase.auth.getSession();
         if (error) throw error;
         if (mounted) {
@@ -46,33 +47,47 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       }
     };
 
-    getUser();
+    if (typeof window !== 'undefined') {
+      getUser();
 
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
-      if (mounted) {
-        setUser(session?.user ?? null);
-        setLoading(false);
+      try {
+        const supabase = createClient();
+        const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+          if (mounted) {
+            setUser(session?.user ?? null);
+            setLoading(false);
+          }
+        });
+
+        return () => {
+          mounted = false;
+          subscription.unsubscribe();
+        };
+      } catch (error) {
+        console.error('Error setting up auth listener:', error);
+        return () => {
+          mounted = false;
+        };
       }
-    });
-
-    return () => {
-      mounted = false;
-      subscription.unsubscribe();
-    };
+    } else {
+      setLoading(false);
+      return () => {
+        mounted = false;
+      };
+    }
   }, []);
 
   const signIn = async (email: string, password: string) => {
     try {
+      const supabase = createClient();
       const { error } = await supabase.auth.signInWithPassword({
         email,
         password,
       });
       
       if (error) {
-        // Log error for debugging but don't expose to user
         console.error('Sign in error:', error);
         
-        // Return user-friendly messages
         if (error.message.includes('Invalid login credentials')) {
           return { error: 'Incorrect email or password. Please try again.' };
         }
@@ -82,13 +97,11 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         if (error.message.includes('Unable to connect')) {
           return { error: 'Please check your internet connection and try again.' };
         }
-        // Generic error for all other cases
         return { error: 'Unable to sign in. Please try again.' };
       }
       
       return { error: null };
     } catch (error) {
-      // Log error for debugging
       console.error('Sign in error:', error);
       return { error: 'Please check your internet connection and try again.' };
     }
@@ -96,6 +109,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const signUp = async (email: string, password: string) => {
     try {
+      const supabase = createClient();
       const { error } = await supabase.auth.signUp({
         email,
         password,
@@ -105,10 +119,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       });
       
       if (error) {
-        // Log error for debugging
         console.error('Sign up error:', error);
         
-        // Return user-friendly messages
         if (error.message.includes('Email rate limit')) {
           return { error: 'Please wait a moment before trying again.' };
         }
@@ -118,13 +130,11 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         if (error.message.includes('Unable to connect')) {
           return { error: 'Please check your internet connection and try again.' };
         }
-        // Generic error for all other cases
         return { error: 'Unable to create account. Please try again.' };
       }
       
       return { error: null };
     } catch (error) {
-      // Log error for debugging
       console.error('Sign up error:', error);
       return { error: 'Please check your internet connection and try again.' };
     }
@@ -132,6 +142,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const signOut = async () => {
     try {
+      const supabase = createClient();
       const { error } = await supabase.auth.signOut();
       if (error) throw error;
     } catch (error) {
@@ -142,28 +153,25 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const resetPassword = async (email: string) => {
     try {
+      const supabase = createClient();
       const { error } = await supabase.auth.resetPasswordForEmail(email, {
         redirectTo: `${window.location.origin}/auth/callback`
       });
       
       if (error) {
-        // Log error for debugging
         console.error('Reset password error:', error);
         
-        // Return user-friendly messages
         if (error.message.includes('rate limit')) {
           return { error: 'Please wait a moment before trying again.' };
         }
         if (error.message.includes('Unable to connect')) {
           return { error: 'Please check your internet connection and try again.' };
         }
-        // Generic message for all other cases to maintain privacy
         return { error: 'If an account exists, you will receive a reset link.' };
       }
       
       return { error: null };
     } catch (error) {
-      // Log error for debugging
       console.error('Reset password error:', error);
       return { error: 'Please check your internet connection and try again.' };
     }
