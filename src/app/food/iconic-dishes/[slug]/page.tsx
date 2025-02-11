@@ -1,6 +1,7 @@
 import { Suspense } from 'react';
 import IconicDishClient from './IconicDishClient';
 import { notFound } from 'next/navigation';
+import { Metadata } from 'next';
 
 // Dish data with additional details
 const dishesData = {
@@ -108,8 +109,32 @@ const dishesData = {
   }
 };
 
+export async function generateMetadata({
+  params,
+}: {
+  params: { slug: string };
+}): Promise<Metadata> {
+  const dish = dishesData[params.slug as keyof typeof dishesData];
+  
+  if (!dish) {
+    return {
+      title: 'Dish Not Found',
+      description: 'The requested dish could not be found.'
+    };
+  }
+
+  return {
+    title: dish.name,
+    description: dish.description
+  };
+}
+
 // Server component that validates the slug and passes data to client component
-export default function IconicDishPage({ params }: { params: { slug: string } }) {
+export default async function IconicDishPage({
+  params,
+}: {
+  params: { slug: string };
+}) {
   const dish = dishesData[params.slug as keyof typeof dishesData];
 
   if (!dish) {

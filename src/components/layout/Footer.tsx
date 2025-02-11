@@ -56,11 +56,11 @@ export function Footer() {
             <h3 className="font-semibold text-[#1a237e] mb-3 md:mb-4 text-sm md:text-base">Quick Links</h3>
             <ul className="space-y-2 md:space-y-3">
               {[
-                { name: 'About Us', href: '/about' },
-                { name: 'Emotions', href: '/emotions' },
-                { name: 'Contact', href: '/contact' }
+                { name: 'About Us', href: { pathname: '/about' } },
+                { name: 'Emotions', href: { pathname: '/emotions' } },
+                { name: 'Contact', href: { pathname: '/contact' } }
               ].map((link) => (
-                <li key={link.href}>
+                <li key={link.href.pathname}>
                   <Link
                     href={link.href}
                     className="text-[#1a237e]/70 hover:text-[#1a237e] transition-colors text-sm md:text-base"
@@ -77,11 +77,11 @@ export function Footer() {
             <h3 className="font-semibold text-[#1a237e] mb-3 md:mb-4 text-sm md:text-base">Resources</h3>
             <ul className="space-y-2 md:space-y-3">
               {[
-                { name: 'Compare Plans', href: '/plans' },
-                { name: 'Resources', href: '/resources' },
-                { name: 'Health & Safety', href: '/health-safety' }
+                { name: 'Compare Plans', href: { pathname: '/plans' } },
+                { name: 'Resources', href: { pathname: '/resources' } },
+                { name: 'Health & Safety', href: { pathname: '/health-safety' } }
               ].map((link) => (
-                <li key={link.href}>
+                <li key={link.href.pathname}>
                   <Link
                     href={link.href}
                     className="text-[#1a237e]/70 hover:text-[#1a237e] transition-colors text-sm md:text-base"
@@ -98,11 +98,11 @@ export function Footer() {
             <h3 className="font-semibold text-[#1a237e] mb-3 md:mb-4 text-sm md:text-base">Legal</h3>
             <ul className="space-y-2 md:space-y-3">
               {[
-                { name: 'Terms of Service', href: '/terms' },
-                { name: 'Privacy Policy', href: '/privacy' },
-                { name: 'Request Beta', href: '/beta' }
+                { name: 'Terms of Service', href: { pathname: '/terms' } },
+                { name: 'Privacy Policy', href: { pathname: '/privacy' } },
+                { name: 'Request Beta', href: { pathname: '/beta' } }
               ].map((link) => (
-                <li key={link.href}>
+                <li key={link.href.pathname}>
                   <Link
                     href={link.href}
                     className="text-[#1a237e]/70 hover:text-[#1a237e] transition-colors text-sm md:text-base"
@@ -147,12 +147,12 @@ export function Footer() {
             </p>
             <div className="flex gap-4 md:gap-6">
               {[
-                { icon: FiFacebook, href: 'https://facebook.com' },
-                { icon: FiInstagram, href: 'https://instagram.com' },
-                { icon: FiTwitter, href: 'https://twitter.com' }
+                { icon: FiFacebook, href: { pathname: 'https://facebook.com' } },
+                { icon: FiInstagram, href: { pathname: 'https://instagram.com' } },
+                { icon: FiTwitter, href: { pathname: 'https://twitter.com' } }
               ].map((social) => (
                 <Link
-                  key={social.href}
+                  key={social.href.pathname}
                   href={social.href}
                   className="text-[#1a237e]/70 hover:text-[#1a237e] transition-colors"
                   target="_blank"

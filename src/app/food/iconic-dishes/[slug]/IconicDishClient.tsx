@@ -22,11 +22,9 @@ interface IconicDishClientProps {
 }
 
 export default function IconicDishClient({ dish }: IconicDishClientProps) {
-  const [isLoading, setIsLoading] = useState(true);
-
-  useEffect(() => {
-    setIsLoading(false);
-  }, []);
+  if (!dish) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <main className="min-h-screen bg-gradient-to-b from-gray-50 to-white py-16">

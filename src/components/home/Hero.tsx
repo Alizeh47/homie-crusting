@@ -28,14 +28,14 @@ export function Hero() {
           </p>
           <div className="flex flex-col sm:flex-row gap-4">
             <Link
-              href="/destinations"
+              href={{ pathname: '/destinations' }}
               className="inline-flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-primary hover:bg-primary-600 transition-colors"
             >
               Explore Cultures
               <ArrowRight className="ml-2 h-5 w-5" />
             </Link>
             <Link
-              href="/register"
+              href={{ pathname: '/register' }}
               className="inline-flex items-center justify-center px-8 py-3 border-2 border-white text-base font-medium rounded-md text-white hover:bg-white/10 transition-colors"
             >
               Start Your Journey

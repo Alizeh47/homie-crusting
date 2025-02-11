@@ -37,4 +37,6 @@ export const supabase = createBrowserClient<Database>(
   }
 );
 
+export const createClient = () => supabase;
+
 export type { User, Session }

@@ -3,10 +3,9 @@
 import { Inter, Playfair_Display } from 'next/font/google';
 import type { ReactNode } from 'react';
 import '@/app/globals.css';
-import { Header } from '@/components/layout/Header';
-import { Footer } from '@/components/layout/Footer';
-import { ClientProvider } from '@/components/providers/ClientProvider';
-import { Sidebar } from '@/components/layout/Sidebar';
+import { Header } from './Header';
+import { Footer } from './Footer';
+import { Sidebar } from './Sidebar';
 
 const inter = Inter({
   subsets: ['latin'],
@@ -26,17 +25,15 @@ interface ClientLayoutProps {
 
 export function ClientLayout({ children }: ClientLayoutProps) {
   return (
-    <ClientProvider>
-      <div className={`${inter.className} ${playfair.variable} font-sans antialiased bg-background text-foreground min-h-screen`}>
-        <div className="flex flex-col min-h-screen">
-          <Header />
-          <Sidebar />
-          <main className="flex-grow pl-20">
-            {children}
-          </main>
-          <Footer />
-        </div>
+    <div className={`${inter.className} ${playfair.variable}`}>
+      <Header />
+      <div className="flex">
+        <Sidebar />
+        <main className="flex-1 min-h-screen pl-20 pt-1">
+          {children}
+        </main>
       </div>
-    </ClientProvider>
+      <Footer />
+    </div>
   );
 }

@@ -25,7 +25,7 @@ import { cn } from '@/lib/utils';
 import { motion } from 'framer-motion';
 
 interface NavItem {
-  href: string;
+  href: { pathname: string };
   label: string;
   icon: React.ReactNode;
 }
@@ -37,22 +37,22 @@ export function Sidebar() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const navigationItems: NavItem[] = [
-    { href: '/', label: 'Home', icon: <Home className="h-7 w-7 md:h-7 md:w-7" /> },
-    { href: '/travel', label: 'Travel & Destinations', icon: <Map className="h-7 w-7 md:h-7 md:w-7" /> },
-    { href: '/food', label: 'Food & Cuisine', icon: <Utensils className="h-7 w-7 md:h-7 md:w-7" /> },
-    { href: '/culture', label: 'Cultural Facts', icon: <Globe className="h-7 w-7 md:h-7 md:w-7" /> },
-    { href: '/language', label: 'Language & Words', icon: <Languages className="h-7 w-7 md:h-7 md:w-7" /> },
-    { href: '/reviews', label: 'Reviews & Thoughts', icon: <MessageCircle className="h-7 w-7 md:h-7 md:w-7" /> },
-    { href: '/media', label: 'Media & Influencers', icon: <Film className="h-7 w-7 md:h-7 md:w-7" /> },
-    { href: '/about', label: 'About Us', icon: <Info className="h-7 w-7 md:h-7 md:w-7" /> },
+    { href: { pathname: '/' }, label: 'Home', icon: <Home className="h-7 w-7 md:h-7 md:w-7" /> },
+    { href: { pathname: '/travel' }, label: 'Travel & Destinations', icon: <Map className="h-7 w-7 md:h-7 md:w-7" /> },
+    { href: { pathname: '/food' }, label: 'Food & Cuisine', icon: <Utensils className="h-7 w-7 md:h-7 md:w-7" /> },
+    { href: { pathname: '/culture' }, label: 'Cultural Facts', icon: <Globe className="h-7 w-7 md:h-7 md:w-7" /> },
+    { href: { pathname: '/language' }, label: 'Language & Words', icon: <Languages className="h-7 w-7 md:h-7 md:w-7" /> },
+    { href: { pathname: '/reviews' }, label: 'Reviews & Thoughts', icon: <MessageCircle className="h-7 w-7 md:h-7 md:w-7" /> },
+    { href: { pathname: '/media' }, label: 'Media & Influencers', icon: <Film className="h-7 w-7 md:h-7 md:w-7" /> },
+    { href: { pathname: '/about' }, label: 'About Us', icon: <Info className="h-7 w-7 md:h-7 md:w-7" /> },
   ];
 
   return (
     <>
-      {/* Desktop Sidebar - Unchanged */}
+      {/* Desktop Sidebar */}
       <aside
         className={cn(
-          'hidden md:block fixed left-0 top-9 h-[calc(100vh-3rem)] bg-white shadow-lg transition-all duration-300 z-40',
+          'hidden md:block fixed left-0 top-14 h-[calc(100vh-3.5rem)] bg-white shadow-lg transition-all duration-300 z-30',
           isExpanded ? 'w-64' : 'w-20'
         )}
       >
@@ -61,10 +61,10 @@ export function Sidebar() {
           <nav className="flex-1 py-6 px-4">
             <div className="space-y-2">
               {navigationItems.map((item) => {
-                const isActive = pathname === item.href;
+                const isActive = pathname === item.href.pathname;
                 return (
                   <Link
-                    key={item.href}
+                    key={item.href.pathname}
                     href={item.href}
                     className={cn(
                       'flex items-center space-x-3 px-4 py-3 rounded-lg transition-colors group relative',
@@ -88,7 +88,7 @@ export function Sidebar() {
               {/* Desktop Authentication Buttons */}
               {!user && (
                 <div className="space-y-2 mt-2">
-                  <Link href="/login">
+                  <Link href={{ pathname: '/login' }}>
                     <motion.div
                       whileHover={{ scale: 1.02 }}
                       whileTap={{ scale: 0.98 }}
@@ -107,7 +107,7 @@ export function Sidebar() {
                       )}
                     </motion.div>
                   </Link>
-                  <Link href="/signup">
+                  <Link href={{ pathname: '/signup' }}>
                     <motion.div
                       whileHover={{ scale: 1.02 }}
                       whileTap={{ scale: 0.98 }}
@@ -135,7 +135,7 @@ export function Sidebar() {
           {user && (
             <div className="p-4 border-t border-gray-200 space-y-2">
               <Link
-                href="/profile"
+                href={{ pathname: '/profile' }}
                 className="flex items-center space-x-3 px-4 py-3 rounded-lg text-gray-700 hover:bg-gray-100 transition-colors group relative"
               >
                 <User className="h-7 w-7" />
@@ -148,7 +148,7 @@ export function Sidebar() {
                 )}
               </Link>
               <Link
-                href="/settings"
+                href={{ pathname: '/settings' }}
                 className="flex items-center space-x-3 px-4 py-3 rounded-lg text-gray-700 hover:bg-gray-100 transition-colors group relative"
               >
                 <Settings className="h-7 w-7" />
@@ -179,14 +179,14 @@ export function Sidebar() {
       </aside>
 
       {/* Mobile Sidebar */}
-      <aside className="md:hidden fixed left-0 top-16 bottom-0 w-16 bg-white shadow-lg z-50 flex flex-col">
+      <aside className="md:hidden fixed left-0 top-14 bottom-0 w-16 bg-white shadow-lg z-30 flex flex-col">
         <nav className="flex-1 py-4 overflow-y-auto">
           <div className="flex flex-col items-center space-y-6">
             {navigationItems.slice(0, 6).map((item) => {
-              const isActive = pathname === item.href;
+              const isActive = pathname === item.href.pathname;
               return (
                 <Link
-                  key={item.href}
+                  key={item.href.pathname}
                   href={item.href}
                   className={cn(
                     'flex flex-col items-center justify-center w-12 h-12 rounded-lg transition-colors relative group',
@@ -232,7 +232,7 @@ export function Sidebar() {
               <div className="space-y-2">
                 {navigationItems.slice(6).map((item) => (
                   <Link
-                    key={item.href}
+                    key={item.href.pathname}
                     href={item.href}
                     className="flex items-center p-2 text-gray-600 hover:text-[#011f4b] hover:bg-gray-50 rounded-lg"
                     onClick={() => setIsMobileMenuOpen(false)}
