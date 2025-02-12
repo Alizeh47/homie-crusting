@@ -15,26 +15,26 @@ const nextConfig = {
   eslint: {
     ignoreDuringBuilds: true, // Temporarily ignore ESLint errors during build
   },
-  webpack: (config, { isServer }) => {
+  webpack: (config, { isServer, dev }) => {
     config.experiments = {
       ...config.experiments,
       topLevelAwait: true,
     };
 
-    if (!isServer) {
-      config.resolve.fallback = {
+    // Optimize module resolution
+    config.resolve = {
+      ...config.resolve,
+      alias: {
+        ...config.resolve.alias,
+        '@': require('path').resolve(__dirname, './src'),
+      },
+      fallback: {
         ...config.resolve.fallback,
         fs: false,
         net: false,
         tls: false,
         crypto: false,
-      };
-    }
-
-    // Optimize module resolution
-    config.resolve.alias = {
-      ...config.resolve.alias,
-      '@': require('path').resolve(__dirname, './src'),
+      },
     };
 
     return config;
