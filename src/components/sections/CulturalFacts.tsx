@@ -76,17 +76,25 @@ const whatWeOffer = [
   },
 ];
 
-// Update the ImageWithFallback component
-const ImageWithFallback = ({ src, alt, ...props }: { src: string; alt: string; [key: string]: any }) => {
+// Separate client component for image handling
+const ClientImage = ({ src, alt, ...props }: { src: string; alt: string; [key: string]: any }) => {
   const [error, setError] = useState(false);
-  const [imgSrc, setImgSrc] = useState(src);
+  const [imgSrc, setImgSrc] = useState(PLACEHOLDER_IMAGE);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     setImgSrc(src);
+    setError(false);
+    setIsLoading(true);
   }, [src]);
 
   return (
-    <div className="relative w-full h-full">
+    <div className="relative w-full h-full bg-gray-100">
+      {isLoading && (
+        <div className="absolute inset-0 flex items-center justify-center bg-gray-100">
+          <div className="animate-pulse w-full h-full bg-gray-200" />
+        </div>
+      )}
       <Image
         {...props}
         src={error ? PLACEHOLDER_IMAGE : imgSrc}
@@ -95,24 +103,22 @@ const ImageWithFallback = ({ src, alt, ...props }: { src: string; alt: string; [
           setError(true);
           setImgSrc(PLACEHOLDER_IMAGE);
         }}
+        onLoadingComplete={() => setIsLoading(false)}
+        priority={props.priority}
       />
     </div>
   );
 };
 
 export function CulturalFacts() {
+  const [mounted, setMounted] = useState(false);
   const [hoveredFact, setHoveredFact] = useState<string | null>(null);
   const [hoveredRegion, setHoveredRegion] = useState<string | null>(null);
   const [showSnippet, setShowSnippet] = useState(false);
-  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
     setMounted(true);
   }, []);
-
-  if (!mounted) {
-    return null; // Prevent hydration issues
-  }
 
   // Animation variants for Framer Motion
   const mapIconVariants = {
@@ -130,6 +136,16 @@ export function CulturalFacts() {
     animate: { opacity: 1, y: 0 },
     exit: { opacity: 0, y: -10 },
   };
+
+  if (!mounted) {
+    return (
+      <div className="py-20 bg-[#cdb891]">
+        <div className="animate-pulse">
+          <div className="h-96 bg-gray-200 rounded-xl mb-8" />
+        </div>
+      </div>
+    );
+  }
 
   return (
     <section className="py-20 bg-[#cdb891]">
@@ -233,16 +249,17 @@ export function CulturalFacts() {
             >
               <div className="relative h-48 overflow-hidden">
                 <motion.div
-                  className="w-full h-full bg-gray-200"
+                  className="w-full h-full"
                   whileHover={{ scale: 1.05 }}
                   transition={{ duration: 0.3 }}
                 >
-                  <ImageWithFallback
+                  <ClientImage
                     src={fact.image}
                     alt={fact.title}
                     width={400}
                     height={300}
                     className="w-full h-full object-cover"
+                    priority={fact.id === '1'}
                   />
                 </motion.div>
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
