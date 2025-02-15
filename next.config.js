@@ -11,8 +11,8 @@ const nextConfig = {
     ],
   },
   experimental: {
-    optimizeCss: true,
-    typedRoutes: true,
+    optimizeCss: false,
+    typedRoutes: false,
   },
   // TypeScript and ESLint configurations
   typescript: {
@@ -22,6 +22,18 @@ const nextConfig = {
     ignoreDuringBuilds: true,
   },
   webpack: (config, { isServer, dev }) => {
+    // Add support for importing markdown files
+    config.module = {
+      ...config.module,
+      rules: [
+        ...config.module.rules,
+        {
+          test: /\.md$/,
+          use: 'raw-loader',
+        },
+      ],
+    };
+
     config.experiments = {
       ...config.experiments,
       topLevelAwait: true,
@@ -50,12 +62,17 @@ const nextConfig = {
   },
   // Optimize caching for production
   onDemandEntries: {
-    maxInactiveAge: process.env.NODE_ENV === 'production' ? 60 * 60 * 1000 : 60 * 1000,
-    pagesBufferLength: process.env.NODE_ENV === 'production' ? 5 : 2,
+    maxInactiveAge: 60 * 60 * 1000, // 1 hour
+    pagesBufferLength: 5,
   },
   compress: true,
   poweredByHeader: false,
   generateEtags: true,
+  distDir: '.next',
+  cleanDistDir: true,
+  pageExtensions: ['js', 'jsx', 'ts', 'tsx', 'md', 'mdx'],
+  trailingSlash: false,
+  output: 'standalone',
 };
 
 module.exports = nextConfig; 

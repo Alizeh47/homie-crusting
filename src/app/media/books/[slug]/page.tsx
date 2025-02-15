@@ -27,7 +27,7 @@ interface BookDetail {
   }>;
 }
 
-const bookDetails: Record<string, BookDetail> = {
+const bookDetails = {
   'midnight-library': {
     title: 'The Midnight Library',
     image: '/images/media/books1.jpg',
@@ -40,8 +40,8 @@ const bookDetails: Record<string, BookDetail> = {
     synopsis: [
       'Between life and death there is a library, and within that library, the shelves go on forever. Every book provides a chance to try another life you could have lived. Nora Seed, the protagonist, finds herself in this library after a series of unfortunate events lead her to despair.',
       'Nora is given the opportunity to explore the infinite possibilities of her life, each book representing a different path she could have taken. From becoming a glaciologist in the Arctic to a rock star touring the world, Nora experiences the highs and lows of each potential life.',
-      'As she delves deeper into the library, guided by her former school librarian Mrs. Elm, Nora confronts her deepest regrets and fears. She learns valuable lessons about the importance of embracing life's imperfections and the beauty of the present moment.',
-      'Would you have done anything different, if you had the chance to undo your regrets? Nora's journey is a profound exploration of self-discovery and the impact of our choices.',
+      'As she delves deeper into the library, guided by her former school librarian Mrs. Elm, Nora confronts her deepest regrets and fears. She learns valuable lessons about the importance of embracing life\'s imperfections and the beauty of the present moment.',
+      'Would you have done anything different, if you had the chance to undo your regrets? Nora\'s journey is a profound exploration of self-discovery and the impact of our choices.',
       'A dazzling novel about all the choices that go into a life well lived, from the internationally bestselling author of Reasons to Stay Alive and How To Stop Time. The Midnight Library is a heart-wrenching yet hopeful story that reminds us that every life has its own unique value and meaning.'
     ],
     reviews: [
@@ -81,11 +81,11 @@ const bookDetails: Record<string, BookDetail> = {
     synopsis: [
       'When nineteen-year-old huntress Feyre kills a wolf in the woods, a terrifying creature arrives to demand retribution.',
       'Dragged to a treacherous magical land she knows about only from legends, Feyre discovers that her captor is not truly a beast, but one of the lethal, immortal faeries who once ruled her world.',
-      'As she adapts to her new home, her feelings for the faerie, Tamlin, transform from icy hostility into a fiery passion that burns through every lie she's been told about the beautiful, dangerous world of the Fae.',
+      'As she adapts to her new home, her feelings for the faerie, Tamlin, transform from icy hostility into a fiery passion that burns through every lie she\'s been told about the beautiful, dangerous world of the Fae.',
       'Feyre learns that the faerie lands are divided into courts, each ruled by a High Lord. Tamlin is the High Lord of the Spring Court, a place of eternal springtime and beauty. However, the Spring Court is under a dark curse that only Feyre can break.',
-      'Feyre meets other key characters, including Lucien, Tamlin's loyal emissary, and Rhysand, the enigmatic and powerful High Lord of the Night Court. As Feyre navigates the treacherous politics and dangers of the faerie world, she uncovers secrets that could change everything.',
+      'Feyre meets other key characters, including Lucien, Tamlin\'s loyal emissary, and Rhysand, the enigmatic and powerful High Lord of the Night Court. As Feyre navigates the treacherous politics and dangers of the faerie world, she uncovers secrets that could change everything.',
       'The plot thickens as Feyre discovers that an ancient and malevolent force, Amarantha, has taken control of the faerie lands. Amarantha holds Tamlin and his court in her thrall, and Feyre must undergo a series of deadly trials to save them.',
-      'Throughout her journey, Feyre's strength, resilience, and love are tested. She must confront her deepest fears and make unimaginable sacrifices to protect those she cares about and to find her place in the faerie world.'
+      'Throughout her journey, Feyre\'s strength, resilience, and love are tested. She must confront her deepest fears and make unimaginable sacrifices to protect those she cares about and to find her place in the faerie world.'
     ],
     reviews: [
       {
@@ -122,15 +122,15 @@ const bookDetails: Record<string, BookDetail> = {
     rating: 4.8,
     pages: 389,
     synopsis: [
-      'Aging and reclusive Hollywood movie icon Evelyn Hugo is finally ready to tell the truth about her glamorous and scandalous life.',
-      'When she chooses unknown magazine reporter Monique Grant for the job, no one is more astounded than Monique herself.',
-      'As Evelyn unspools her story of ruthless ambition, unexpected friendship, and a great forbidden love, Monique begins to feel a very real connection to the legendary star.',
-      'Evelyn recounts her rise to fame in the 1950s, her strategic marriages to seven husbands, and the sacrifices she made to stay on top in a male-dominated industry.',
-      'She reveals the truth behind her most iconic roles, the pressures of Hollywood, and the secrets she kept to protect her loved ones.',
-      'Monique learns about Evelyn's deep and abiding love for fellow actress Celia St. James, a relationship that had to be hidden due to the societal norms of the time.',
-      'As the story progresses, Monique discovers parallels between her own life and Evelyn's, leading her to reevaluate her own choices and ambitions.',
-      'Evelyn's narrative is filled with twists and turns, including betrayals, heartbreaks, and moments of profound joy, painting a complex portrait of a woman who lived life on her own terms.',
-      'In the end, Evelyn's revelations force Monique to confront a shocking truth that ties their lives together in an unexpected way.'
+      "Aging and reclusive Hollywood movie icon Evelyn Hugo is finally ready to tell the truth about her glamorous and scandalous life.",
+      "When she chooses unknown magazine reporter Monique Grant for the job, no one is more astounded than Monique herself.",
+      "As Evelyn unspools her story of ruthless ambition, unexpected friendship, and a great forbidden love, Monique begins to feel a very real connection to the legendary star.",
+      "Evelyn recounts her rise to fame in the 1950s, her strategic marriages to seven husbands, and the sacrifices she made to stay on top in a male-dominated industry.",
+      "She reveals the truth behind her most iconic roles, the pressures of Hollywood, and the secrets she kept to protect her loved ones.",
+      "Monique learns about Evelyn\u2019s deep and abiding love for fellow actress Celia St. James, a relationship that had to be hidden due to the societal norms of the time.",
+      "As the story progresses, Monique discovers parallels between her own life and Evelyn\u2019s, leading her to reevaluate her own choices and ambitions.",
+      "Evelyn\u2019s narrative is filled with twists and turns, including betrayals, heartbreaks, and moments of profound joy, painting a complex portrait of a woman who lived life on her own terms.",
+      "In the end, Evelyn\u2019s revelations force Monique to confront a shocking truth that ties their lives together in an unexpected way."
     ],
     reviews: [
       {
@@ -157,7 +157,7 @@ const bookDetails: Record<string, BookDetail> = {
       }
     ]
   }
-};
+} as const;
 
 export default function BookDetailPage() {
   const router = useRouter();
