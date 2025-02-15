@@ -12,6 +12,7 @@ const nextConfig = {
         hostname: '**',
       },
     ],
+    unoptimized: process.env.NODE_ENV === 'development',
   },
   experimental: {
     optimizeCss: true,
@@ -33,6 +34,10 @@ const nextConfig = {
         {
           test: /\.md$/,
           use: 'raw-loader',
+        },
+        {
+          test: /\.(png|jpe?g|gif|svg|webp)$/i,
+          type: 'asset/resource',
         },
       ],
     };
@@ -71,6 +76,7 @@ const nextConfig = {
   compress: true,
   pageExtensions: ['js', 'jsx', 'ts', 'tsx', 'md', 'mdx'],
   trailingSlash: false,
+  assetPrefix: process.env.NODE_ENV === 'production' ? '/_next' : '',
 };
 
 module.exports = nextConfig; 

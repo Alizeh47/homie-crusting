@@ -58,8 +58,18 @@
   framework = "next"
   targetPort = 3000
 
-# Handle client-side routing
+# Proper Next.js routing
+[[redirects]]
+  from = "/_next/*"
+  to = "/_next/:splat"
+  status = 200
+
+[[redirects]]
+  from = "/static/*"
+  to = "/static/:splat"
+  status = 200
+
 [[redirects]]
   from = "/*"
-  to = "/index.html"
+  to = "/.netlify/functions/next_server"
   status = 200 
