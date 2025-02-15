@@ -1,6 +1,9 @@
+'use client';
+
 import { useState } from 'react';
 import { MapPin } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import Image from 'next/image';
 
 interface EmotionCard {
   id: string;
@@ -117,4 +120,6 @@ export function EmotionsGrid() {
       </div>
     </section>
   );
-} 
+}
+
+export default EmotionsGrid; 

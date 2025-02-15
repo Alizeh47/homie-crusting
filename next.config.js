@@ -1,19 +1,25 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  reactStrictMode: false,
+  reactStrictMode: true,
   images: {
-    domains: ['localhost'],
-    unoptimized: process.env.NODE_ENV === 'development',
+    unoptimized: true,
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: '**',
+      },
+    ],
   },
   experimental: {
-    optimizeCss: false,
+    optimizeCss: true,
     typedRoutes: true,
   },
+  // TypeScript and ESLint configurations
   typescript: {
-    ignoreBuildErrors: true, // Temporarily ignore build errors
+    ignoreBuildErrors: true,
   },
   eslint: {
-    ignoreDuringBuilds: true, // Temporarily ignore ESLint errors during build
+    ignoreDuringBuilds: true,
   },
   webpack: (config, { isServer, dev }) => {
     config.experiments = {
@@ -42,31 +48,14 @@ const nextConfig = {
   compiler: {
     removeConsole: process.env.NODE_ENV === 'production',
   },
-  // Disable persistent caching in development
+  // Optimize caching for production
   onDemandEntries: {
-    maxInactiveAge: 60 * 1000, // 1 minute
-    pagesBufferLength: 1,
+    maxInactiveAge: process.env.NODE_ENV === 'production' ? 60 * 60 * 1000 : 60 * 1000,
+    pagesBufferLength: process.env.NODE_ENV === 'production' ? 5 : 2,
   },
-  // Disable compression in development
-  compress: process.env.NODE_ENV === 'production',
+  compress: true,
   poweredByHeader: false,
-  generateEtags: false,
-  headers: async () => {
-    if (process.env.NODE_ENV !== 'production') {
-      return [];
-    }
-    return [
-      {
-        source: '/:path*',
-        headers: [
-          {
-            key: 'Cache-Control',
-            value: 'public, max-age=31536000, immutable',
-          },
-        ],
-      },
-    ];
-  },
+  generateEtags: true,
 };
 
 module.exports = nextConfig; 

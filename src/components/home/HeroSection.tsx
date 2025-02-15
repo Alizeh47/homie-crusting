@@ -1,6 +1,19 @@
+'use client';
+
 import Link from 'next/link';
+import { useEffect, useRef } from 'react';
 
 export function HeroSection() {
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  useEffect(() => {
+    if (videoRef.current) {
+      videoRef.current.play().catch(error => {
+        console.warn('Auto-play was prevented:', error);
+      });
+    }
+  }, []);
+
   return (
     <section className="relative w-full">
       {/* Main Hero Section */}
@@ -9,6 +22,7 @@ export function HeroSection() {
         <div className="absolute inset-0 z-0 w-full overflow-hidden">
           <div className="relative h-[40vh] md:h-screen">
             <video
+              ref={videoRef}
               autoPlay
               muted
               loop
@@ -19,7 +33,7 @@ export function HeroSection() {
               Your browser does not support the video tag.
             </video>
             {/* Mobile Overlay for Better Text Readability */}
-            <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-black/20 to-transparent md:bg-black/20"></div>
+            <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-black/20 to-transparent md:bg-black/20" />
           </div>
         </div>
         
@@ -179,4 +193,6 @@ export function HeroSection() {
     </section>
   );
 }
+
+export default HeroSection;
 

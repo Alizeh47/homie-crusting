@@ -1,6 +1,9 @@
+'use client';
+
 import { useState } from 'react';
 import { Heart, MapPin, Calendar, ArrowRight } from 'lucide-react';
 import Link from 'next/link';
+import Image from 'next/image';
 
 interface Destination {
   id: string;
@@ -72,7 +75,7 @@ const destinationOfTheMonth = {
   },
 };
 
-export function DestinationsSection() {
+export function Destinations() {
   const [selectedCategory, setSelectedCategory] = useState<Destination['category'] | 'all'>('all');
   const [hoveredCard, setHoveredCard] = useState<string | null>(null);
 
@@ -209,4 +212,6 @@ export function DestinationsSection() {
       </div>
     </section>
   );
-} 
+}
+
+export default Destinations; 

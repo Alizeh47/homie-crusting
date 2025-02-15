@@ -72,4 +72,6 @@ export function WhoWeAre() {
       </div>
     </section>
   );
-} 
+}
+
+export default WhoWeAre; 

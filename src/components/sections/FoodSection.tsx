@@ -271,4 +271,6 @@ export function FoodSection() {
       </section>
     </div>
   );
-} 
+}
+
+export default FoodSection; 

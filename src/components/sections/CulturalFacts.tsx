@@ -1,8 +1,11 @@
+'use client';
+
 import { useState, useEffect } from 'react';
 import { Globe2, Book, Search, PartyPopper, Heart, Star } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import Link from 'next/link';
+import Image from 'next/image';
 
 interface CulturalFact {
   id: string;
@@ -110,13 +113,13 @@ export function CulturalFacts() {
         </p>
         <div className="flex flex-col sm:flex-row gap-4 justify-center mt-8">
           <Link
-            href="/culture"
+            href={{ pathname: '/culture' }}
             className="px-8 py-3 bg-[#05342b] text-white rounded-lg font-medium hover:bg-[#05342b]/90 transition-all duration-300 text-center"
           >
             Start Exploring
           </Link>
           <Link
-            href="/culture/journey"
+            href={{ pathname: '/culture/journey' }}
             className="px-8 py-3 bg-white text-[#05342b] border-2 border-[#05342b] rounded-lg font-medium hover:bg-gray-50 transition-all duration-300 text-center"
           >
             Start Your Journey
@@ -319,4 +322,6 @@ export function CulturalFacts() {
       </div>
     </section>
   );
-} 
+}
+
+export default CulturalFacts; 
