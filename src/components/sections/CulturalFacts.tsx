@@ -18,6 +18,8 @@ interface CulturalFact {
   snippet: string;
 }
 
+const PLACEHOLDER_IMAGE = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjMwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iNDAwIiBoZWlnaHQ9IjMwMCIgZmlsbD0iI2YzZjRmNiIvPjx0ZXh0IHg9IjUwJSIgeT0iNTAlIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iMjAiIGZpbGw9IiM5Y2EzYWYiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGRvbWluYW50LWJhc2VsaW5lPSJtaWRkbGUiPkltYWdlIGNvbWluZyBzb29uPC90ZXh0Pjwvc3ZnPg==';
+
 const culturalFacts: CulturalFact[] = [
   {
     id: '1',
@@ -25,7 +27,7 @@ const culturalFacts: CulturalFact[] = [
     title: 'Crying in Public as Emotional Healing',
     description: 'In Japan, crying intentionally in public is seen as a form of emotional cleansing, celebrated in organized "tear-seeking" sessions.',
     icon: '🌸',
-    image: '/images/cultural-facts/japan-crying.jpg',
+    image: PLACEHOLDER_IMAGE,
     position: { x: 80, y: 30 },
     snippet: 'Did you know? Japanese "crying clubs" offer a safe space for emotional release.',
   },
@@ -35,7 +37,7 @@ const culturalFacts: CulturalFact[] = [
     title: 'Age Counting Tradition',
     description: 'South Koreans have a unique age-counting system where everyone is considered one year old at birth and gains a year every New Year.',
     icon: '📅',
-    image: '/images/cultural-facts/korea-age.jpg',
+    image: PLACEHOLDER_IMAGE,
     position: { x: 75, y: 35 },
     snippet: 'Fun fact: In Korea, you might be 2 years older than your international age!',
   },
@@ -45,7 +47,7 @@ const culturalFacts: CulturalFact[] = [
     title: 'Head Wobble Gesture',
     description: 'The famous Indian head wobble can mean yes, no, or maybe - a complex non-verbal communication that varies by context and region.',
     icon: '🇮🇳',
-    image: '/images/cultural-facts/india-gesture.jpg',
+    image: PLACEHOLDER_IMAGE,
     position: { x: 65, y: 45 },
     snippet: 'The Indian head wobble has at least 8 different meanings!',
   },
@@ -74,10 +76,43 @@ const whatWeOffer = [
   },
 ];
 
+// Update the ImageWithFallback component
+const ImageWithFallback = ({ src, alt, ...props }: { src: string; alt: string; [key: string]: any }) => {
+  const [error, setError] = useState(false);
+  const [imgSrc, setImgSrc] = useState(src);
+
+  useEffect(() => {
+    setImgSrc(src);
+  }, [src]);
+
+  return (
+    <div className="relative w-full h-full">
+      <Image
+        {...props}
+        src={error ? PLACEHOLDER_IMAGE : imgSrc}
+        alt={alt}
+        onError={() => {
+          setError(true);
+          setImgSrc(PLACEHOLDER_IMAGE);
+        }}
+      />
+    </div>
+  );
+};
+
 export function CulturalFacts() {
   const [hoveredFact, setHoveredFact] = useState<string | null>(null);
   const [hoveredRegion, setHoveredRegion] = useState<string | null>(null);
   const [showSnippet, setShowSnippet] = useState(false);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted) {
+    return null; // Prevent hydration issues
+  }
 
   // Animation variants for Framer Motion
   const mapIconVariants = {
@@ -197,13 +232,19 @@ export function CulturalFacts() {
               data-cursor={fact.country.toLowerCase()}
             >
               <div className="relative h-48 overflow-hidden">
-                <motion.img
-                  src={fact.image}
-                  alt={fact.title}
-                  className="w-full h-full object-cover"
+                <motion.div
+                  className="w-full h-full bg-gray-200"
                   whileHover={{ scale: 1.05 }}
                   transition={{ duration: 0.3 }}
-                />
+                >
+                  <ImageWithFallback
+                    src={fact.image}
+                    alt={fact.title}
+                    width={400}
+                    height={300}
+                    className="w-full h-full object-cover"
+                  />
+                </motion.div>
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
               </div>
               <div className="p-6">
@@ -258,44 +299,9 @@ export function CulturalFacts() {
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.6 }}
-              className="relative h-64 lg:h-full"
-              style={{
-                backgroundImage: 'url(/path/to/your/image.jpg)',
-                backgroundSize: 'cover',
-                backgroundPosition: 'center',
-              }}
+              className="relative h-64 lg:h-full bg-gray-100"
             >
-              <div className="absolute inset-0">
-                <img 
-                  src="/images/backgrounds/stars-bg.jpg" 
-                  alt="Background" 
-                  className="w-full h-full object-cover"
-                />
-              </div>
-              <div className="absolute inset-0 bg-globe-hands bg-cover bg-center opacity-75" />
               <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-transparent" />
-              {/* Animated stars */}
-              {[...Array(5)].map((_, i) => (
-                <motion.div
-                  key={i}
-                  className="absolute"
-                  animate={{
-                    scale: [1, 1.2, 1],
-                    opacity: [0.5, 1, 0.5],
-                  }}
-                  transition={{
-                    duration: 2,
-                    repeat: Infinity,
-                    delay: i * 0.4,
-                  }}
-                  style={{
-                    left: `${20 + i * 15}%`,
-                    top: `${30 + (i % 3) * 20}%`,
-                  }}
-                >
-                  <Star className="h-4 w-4 text-primary/60" />
-                </motion.div>
-              ))}
             </motion.div>
             <motion.div
               initial={{ opacity: 0, x: 20 }}

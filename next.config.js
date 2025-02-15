@@ -2,6 +2,7 @@
 const nextConfig = {
   reactStrictMode: true,
   images: {
+    domains: ['localhost', 'your-site-url.netlify.app'],
     unoptimized: true,
     remotePatterns: [
       {
@@ -11,8 +12,8 @@ const nextConfig = {
     ],
   },
   experimental: {
-    optimizeCss: false,
-    typedRoutes: false,
+    optimizeCss: true,
+    typedRoutes: true,
   },
   // TypeScript and ESLint configurations
   typescript: {
@@ -60,19 +61,14 @@ const nextConfig = {
   compiler: {
     removeConsole: process.env.NODE_ENV === 'production',
   },
-  // Optimize caching for production
-  onDemandEntries: {
-    maxInactiveAge: 60 * 60 * 1000, // 1 hour
-    pagesBufferLength: 5,
-  },
-  compress: true,
-  poweredByHeader: false,
-  generateEtags: true,
+  // Optimize for Netlify deployment
+  output: 'standalone',
   distDir: '.next',
-  cleanDistDir: true,
+  generateEtags: true,
+  poweredByHeader: false,
+  compress: true,
   pageExtensions: ['js', 'jsx', 'ts', 'tsx', 'md', 'mdx'],
   trailingSlash: false,
-  output: 'standalone',
 };
 
 module.exports = nextConfig; 
