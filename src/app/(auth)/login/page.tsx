@@ -54,7 +54,7 @@ export default function LoginPage() {
         router.push('/dashboard');
       }
     } catch (err) {
-      setError('We\'re having trouble connecting. Please check your internet connection and try again.');
+      setError('We&apos;re having trouble connecting. Please check your internet connection and try again.');
     } finally {
       setLoading(false);
     }

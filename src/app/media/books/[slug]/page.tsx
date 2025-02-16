@@ -11,16 +11,16 @@ interface BookDetail {
   description: string;
   author: string;
   publishYear: string;
-  genre: string[];
+  genre: readonly string[];
   rating: number;
   pages: number;
-  synopsis: string[];
-  reviews: Array<{
+  synopsis: readonly string[];
+  reviews: ReadonlyArray<{
     user: string;
     comment: string;
     rating: number;
   }>;
-  relatedBooks: Array<{
+  relatedBooks: ReadonlyArray<{
     title: string;
     author: string;
     image: string;
@@ -159,6 +159,8 @@ const bookDetails = {
   }
 } as const;
 
+type ValidBookSlug = keyof typeof bookDetails;
+
 export default function BookDetailPage() {
   const router = useRouter();
   const params = useParams();
@@ -167,13 +169,13 @@ export default function BookDetailPage() {
   useEffect(() => {
     if (!params?.slug) return;
     
-    const bookDetail = bookDetails[params.slug as string];
-    if (!bookDetail) {
+    const slug = params.slug as string;
+    if (!(slug in bookDetails)) {
       router.push('/media');
       return;
     }
     
-    setBook(bookDetail);
+    setBook(bookDetails[slug as ValidBookSlug]);
   }, [params, router]);
 
   if (!book) return null;

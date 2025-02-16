@@ -5,8 +5,7 @@ import { Globe2, Book, Search, PartyPopper, Heart, Star } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { motion, AnimatePresence } from 'framer-motion';
 import Link from 'next/link';
-import Image from 'next/image';
-import type { ImageProps } from 'next/image';
+import { Image } from '@/components/ui/Image';
 
 interface CulturalFact {
   id: string;
@@ -84,9 +83,6 @@ const OptimizedImage = ({ src, alt, priority = false }: { src: string; alt: stri
         fill
         className="object-cover transition-all duration-300"
         priority={priority}
-        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-        quality={75}
-        loading={priority ? "eager" : "lazy"}
       />
     </div>
   );
@@ -169,9 +165,6 @@ export function CulturalFacts() {
             fill
             priority
             className="object-cover opacity-60"
-            sizes="(max-width: 1200px) 100vw, 1200px"
-            quality={75}
-            loading="eager"
           />
         </div>
         {culturalFacts.map((fact) => (
@@ -311,7 +304,6 @@ export function CulturalFacts() {
                 fill
                 className="object-cover"
                 priority
-                sizes="(max-width: 768px) 100vw, 50vw"
                 quality={75}
                 loading="eager"
               />
