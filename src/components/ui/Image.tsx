@@ -1,4 +1,7 @@
-import Image, { ImageProps } from 'next/image';
+import NextImage from 'next/image';
+import type { ImageProps } from 'next/image';
 
-export { default as Image } from 'next/image';
+const Image = NextImage;
+
+export { Image };
 export type { ImageProps }; 

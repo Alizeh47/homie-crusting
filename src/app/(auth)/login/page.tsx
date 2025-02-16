@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useAuth } from '@/context/AuthContext';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
@@ -36,8 +36,15 @@ export default function LoginPage() {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
-  const { signIn } = useAuth();
+  const { signIn, user, initError } = useAuth();
   const router = useRouter();
+
+  // Redirect if user is already logged in
+  useEffect(() => {
+    if (user) {
+      router.replace('/dashboard');
+    }
+  }, [user, router]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -49,12 +56,10 @@ export default function LoginPage() {
       
       if (result.error) {
         setError(result.error);
-      } else {
-        // Successful login
-        router.push('/dashboard');
       }
     } catch (err) {
       setError('We&apos;re having trouble connecting. Please check your internet connection and try again.');
+      console.error('Login error:', err);
     } finally {
       setLoading(false);
     }
@@ -114,14 +119,14 @@ export default function LoginPage() {
             className="bg-white/90 backdrop-blur-lg rounded-[30px] p-8 shadow-xl border border-[#E3F2FD]"
           >
             <form className="space-y-6" onSubmit={handleSubmit}>
-              {error && (
+              {(error || initError) && (
                 <motion.div
                   initial={{ opacity: 0, y: -10 }}
                   animate={{ opacity: 1, y: 0 }}
                   className="rounded-lg bg-red-50 p-4 text-center"
                 >
                   <div className="text-sm text-red-700">
-                    <p className="font-medium">{error}</p>
+                    <p className="font-medium">{initError || error}</p>
                   </div>
                 </motion.div>
               )}

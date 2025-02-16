@@ -7,6 +7,7 @@ import type { User } from '@supabase/supabase-js';
 interface AuthContextType {
   user: User | null;
   loading: boolean;
+  initError: string | null;
   signIn: (email: string, password: string) => Promise<{ error: string | null }>;
   signUp: (email: string, password: string) => Promise<{ error: string | null }>;
   signOut: () => Promise<void>;
@@ -16,6 +17,7 @@ interface AuthContextType {
 const AuthContext = createContext<AuthContextType>({
   user: null,
   loading: true,
+  initError: null,
   signIn: async () => ({ error: null }),
   signUp: async () => ({ error: null }),
   signOut: async () => {},
@@ -25,24 +27,39 @@ const AuthContext = createContext<AuthContextType>({
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
+  const [initError, setInitError] = useState<string | null>(null);
 
   useEffect(() => {
     let mounted = true;
+    let retryCount = 0;
+    const maxRetries = 3;
 
     const getUser = async () => {
       try {
         const supabase = createClient();
         const { data: { session }, error } = await supabase.auth.getSession();
-        if (error) throw error;
+        
+        if (error) {
+          console.error('Session error:', error);
+          if (retryCount < maxRetries) {
+            retryCount++;
+            setTimeout(getUser, 1000 * retryCount); // Exponential backoff
+            return;
+          }
+          throw error;
+        }
+
         if (mounted) {
           setUser(session?.user ?? null);
           setLoading(false);
+          setInitError(null);
         }
       } catch (error) {
         console.error('Error getting session:', error);
         if (mounted) {
           setUser(null);
           setLoading(false);
+          setInitError('Unable to initialize authentication. Please refresh the page or try again later.');
         }
       }
     };
@@ -56,6 +73,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
           if (mounted) {
             setUser(session?.user ?? null);
             setLoading(false);
+            setInitError(null);
           }
         });
 
@@ -65,6 +83,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         };
       } catch (error) {
         console.error('Error setting up auth listener:', error);
+        if (mounted) {
+          setInitError('Unable to initialize authentication. Please refresh the page or try again later.');
+        }
         return () => {
           mounted = false;
         };
@@ -180,6 +201,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const value = {
     user,
     loading,
+    initError,
     signIn,
     signUp,
     signOut,

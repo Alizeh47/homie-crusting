@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { supabase } from '@/lib/supabase';
+import { createClient } from '@/lib/supabase/client';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { FiStar, FiHeart, FiUser, FiLock, FiMail } from 'react-icons/fi';
@@ -48,6 +48,7 @@ export default function SignUp() {
     setLoading(true);
 
     try {
+      const supabase = createClient();
       const { data, error } = await supabase.auth.signUp({
         email: formData.email,
         password: formData.password,

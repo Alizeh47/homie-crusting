@@ -304,8 +304,6 @@ export function CulturalFacts() {
                 fill
                 className="object-cover"
                 priority
-                quality={75}
-                loading="eager"
               />
               <div className="absolute inset-0 bg-gradient-to-br from-primary/40 to-transparent mix-blend-overlay" />
             </motion.div>
