@@ -1,6 +1,6 @@
 [build]
   command = "npm run build"
-  publish = ".next"
+  publish = ".next/standalone"
 
 [build.environment]
   NEXT_USE_NETLIFY_EDGE = "true"
@@ -71,5 +71,5 @@
 
 [[redirects]]
   from = "/*"
-  to = "/.netlify/functions/next_server"
-  status = 200 
+  to = "/index.html"
+  status = 200

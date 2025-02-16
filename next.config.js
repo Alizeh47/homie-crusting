@@ -2,81 +2,34 @@
 const nextConfig = {
   reactStrictMode: true,
   images: {
-    domains: ['localhost'],
-    dangerouslyAllowSVG: true,
-    contentDispositionType: 'attachment',
-    contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
     remotePatterns: [
       {
         protocol: 'https',
         hostname: '**',
       },
     ],
-    unoptimized: process.env.NODE_ENV === 'development',
   },
-  experimental: {
-    optimizeCss: true,
-    typedRoutes: true,
-  },
-  // TypeScript and ESLint configurations
+  // Enable swcMinify for better performance
+  swcMinify: true,
+  // Keep type checking but enable build-time optimizations
   typescript: {
-    ignoreBuildErrors: true,
+    // Don't ignore build errors
+    ignoreBuildErrors: false,
   },
   eslint: {
-    ignoreDuringBuilds: true,
+    // Don't ignore eslint errors during build
+    ignoreDuringBuilds: false,
   },
-  webpack: (config, { isServer, dev }) => {
-    // Add support for importing markdown files
-    config.module = {
-      ...config.module,
-      rules: [
-        ...config.module.rules,
-        {
-          test: /\.md$/,
-          use: 'raw-loader',
-        },
-        {
-          test: /\.(png|jpe?g|gif|svg|webp)$/i,
-          type: 'asset/resource',
-        },
-      ],
-    };
-
-    config.experiments = {
-      ...config.experiments,
-      topLevelAwait: true,
-    };
-
-    // Optimize module resolution
-    config.resolve = {
-      ...config.resolve,
-      alias: {
-        ...config.resolve.alias,
-        '@': require('path').resolve(__dirname, './src'),
-      },
-      fallback: {
-        ...config.resolve.fallback,
-        fs: false,
-        net: false,
-        tls: false,
-        crypto: false,
-      },
-    };
-
+  // Enable webpack caching for faster builds
+  webpack: (config) => {
+    // Enable caching
+    config.cache = true;
     return config;
   },
-  compiler: {
-    removeConsole: process.env.NODE_ENV === 'production',
-  },
-  // Optimize for Netlify deployment
-  output: 'standalone',
+  // Directory configuration
   distDir: '.next',
-  generateEtags: true,
   poweredByHeader: false,
   compress: true,
-  pageExtensions: ['js', 'jsx', 'ts', 'tsx', 'md', 'mdx'],
-  trailingSlash: false,
-  assetPrefix: process.env.NODE_ENV === 'production' ? '/_next' : '',
 };
 
 module.exports = nextConfig; 

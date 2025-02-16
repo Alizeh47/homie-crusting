@@ -184,7 +184,7 @@ export function EmotionsGrid() {
           className="text-center mt-12"
         >
           <Link
-            href="/emotions"
+            href={{ pathname: '/emotions' }}
             className="inline-flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-primary hover:bg-primary-600 transition-colors"
           >
             <Globe className="mr-2 h-5 w-5" />
